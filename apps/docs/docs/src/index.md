@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Leopold Docs"
   text: "Explore The Shape of The Future"
-  tagline: 🔍 为学大益
+  tagline: 🔍 探索未来的形状
   image:
     src: /main.jpg
     alt: background image
@@ -14,16 +14,16 @@ hero:
       link: /FrontEnd/html/html5
     - theme: alt
       text: README 💫
-      link: ./README
+      link: /README
 
 features:
   - icon: 📚
     title: Learn
-    details: 持续积累，不断进步
+    details: 学习
   - icon: 📝
     title: Record
-    details: 记下每次的点滴
+    details: 记录
   - icon: 🔭
     title: Explore
-    details: 探索未来的形状
+    details: 探索
 ---
