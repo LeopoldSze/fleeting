@@ -5,23 +5,25 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["docs/src/*"]
     },
-    "types": ["bun", "vite/client", "vitepress/client"],
+    "types": ["bun", "vite/client", "vitepress", "vitepress/client"],
     "noEmit": true
   },
   "include": [
-    ".vitepress/**/*.ts",
-    ".vitepress/**/*.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "index.d.ts"
+    "docs/.vitepress/**/*.ts",
+    "docs/.vitepress/**/*.d.ts",
+    "docs/**/*.ts",
+    "docs/**/*.d.ts",
+    "docs/**/*.tsx",
+    "docs/**/*.vue",
+    "index.d.ts",
+    "shims-vue.d.ts"
   ],
   "exclude": [
     "node_modules",
-    "src/assets",
-    "src/public",
+    "docs/src/assets",
+    "docs/src/public",
     "dist"
   ]
 }

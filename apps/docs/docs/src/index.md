@@ -19,10 +19,10 @@ hero:
 features:
   - icon: 📚
     title: Learn
-    details: 持续学习，不断进步
+    details: 持续积累，不断进步
   - icon: 📝
     title: Record
-    details: 记下每一分钟的思考
+    details: 记下每次的点滴
   - icon: 🔭
     title: Explore
     details: 探索未来的形状
