@@ -2,5 +2,18 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vitepress",
   "buildCommand": "pnpm build",
-  "outputDirectory": "docs/dist"
+  "outputDirectory": "docs/dist",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.doc.leopoldsze.top"
+        }
+      ],
+      "destination": "https://doc.leopoldsze.top/:path*",
+      "permanent": true
+    }
+  ]
 }
