@@ -28,9 +28,11 @@
   "scripts": {
     "dev": "pnpm -r dev",
     "dev:blog": "pnpm --filter @leopoldsze/blog dev",
+    "dev:docs": "pnpm --filter @leopoldsze/docs dev",
     "dev:utils": "pnpm --filter @leopoldsze/utils dev",
     "build": "pnpm -r build",
     "build:blog": "pnpm --filter @leopoldsze/blog build",
+    "build:docs": "pnpm --filter @leopoldsze/docs build",
     "build:utils": "pnpm --filter @leopoldsze/utils build",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
@@ -40,8 +42,7 @@
     "postinstall": "simple-git-hooks",
     "commit": "git-cz",
     "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "version-packages": "changeset version"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.4.1",
