@@ -7,12 +7,6 @@ on:
     paths:
       - 'apps/docs/**'
       - .github/workflows/deploy-docs.yml
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'apps/docs/**'
-      - .github/workflows/deploy-docs.yml
   workflow_dispatch: {}
 
 concurrency:
