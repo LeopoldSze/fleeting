@@ -40,8 +40,7 @@
     "postinstall": "simple-git-hooks",
     "commit": "git-cz",
     "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "version-packages": "changeset version"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.4.1",

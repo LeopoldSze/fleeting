@@ -10,6 +10,11 @@ export default antfu({
   stylistic: {
     indent: 2,
     quotes: 'single',
-    semi: false,
+    semi: false
   },
+  rules: {
+    // 自定义规则
+    'no-console': 'off',
+    'style/comma-dangle': ['error', 'never']
+  }
 })
