@@ -45,9 +45,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build blog
-        run: pnpm build:blog
-
       - name: Vercel Pull
         run: pnpm dlx vercel pull --yes --environment=production --token "$VERCEL_TOKEN" --cwd apps/blog
 
