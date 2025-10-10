@@ -2,16 +2,17 @@
   "name": "@leopoldsze/docs",
   "type": "module",
   "private": true,
-  "main": "src/index.md",
+  "main": "docs/src/index.md",
   "scripts": {
-    "dev": "vitepress dev . --port 9000",
-    "build": "vitepress build ."
+    "dev": "vitepress dev docs --port 9000",
+    "build": "vitepress build docs"
   },
   "devDependencies": {
     "globby": "^15.0.0",
     "gray-matter": "^4.0.3",
     "mz": "^2.7.0",
     "sass-embedded": "^1.93.2",
+    "vite": "^7.1.9",
     "vitepress": "1.6.4",
     "vue": "^3.5.22"
   }
