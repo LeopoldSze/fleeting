@@ -14,7 +14,7 @@ hero:
       link: /FrontEnd/html/html5
     - theme: alt
       text: README 💫
-      link: /README
+      link: /intro
 
 features:
   - icon: 📚
