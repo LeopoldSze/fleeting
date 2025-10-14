@@ -15,7 +15,7 @@ export default defineConfig({
       { value: 'build', name: 'build:    构建/依赖', emoji: '📦' },
       { value: 'ci', name: 'ci:       CI 配置', emoji: '🎡' },
       { value: 'chore', name: 'chore:    维护杂项', emoji: '🔧' },
-      { value: 'revert', name: 'revert:   回退提交', emoji: '⏪' },
-    ],
-  },
+      { value: 'revert', name: 'revert:   回退提交', emoji: '⏪' }
+    ]
+  }
 })
