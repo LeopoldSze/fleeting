@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      SKIP_INSTALL_SIMPLE_GIT_HOOKS: '1'
 
     steps:
       - name: Checkout
