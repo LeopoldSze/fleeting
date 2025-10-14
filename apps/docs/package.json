@@ -1,6 +1,7 @@
 {
   "name": "@leopoldsze/docs",
   "type": "module",
+  "version": "0.0.1",
   "private": true,
   "main": "docs/src/index.md",
   "scripts": {
