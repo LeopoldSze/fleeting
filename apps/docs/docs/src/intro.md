@@ -226,7 +226,7 @@ export default {
 ```typescript
 // .vitepress/config.ts
 
-export defort defineConfig({
+export default defineConfig({
   markdown: {
     lineNumbers: true, // 启用代码行号
   },

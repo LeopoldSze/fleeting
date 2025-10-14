@@ -16,5 +16,6 @@ export default antfu({
     // 自定义规则
     'no-console': 'off',
     'style/comma-dangle': ['error', 'never']
-  }
+  },
+  ignores: ['**/*.md']
 })
