@@ -79,3 +79,23 @@ When you are ready to release a new version for any package:
    - Bump versions in `package.json` for selected packages.
    - Update `CHANGELOG.md` for each package.
    - Generate a release commit automatically.
+
+## CI/CD & Automated Deployment
+
+This project integrates **GitHub Actions** and **Vercel** to provide a fully automated code verification and deployment pipeline. To prevent redundant builds during daily development, all automated triggers are strictly bound to the `main` (production) branch.
+
+### GitHub Actions (`.github/workflows/`)
+
+1. **CI Quality Check (`ci.yml`)**
+   - **Triggers**: Only on `push` to the `main` branch, or when opening a `Pull Request` against `main`.
+   - **Function**: Automatically installs dependencies, runs ESLint (`pnpm lint:all`), performs type checking (`pnpm typecheck`), and tests the build (`pnpm build`). If any step fails, the PR is blocked from merging.
+
+2. **Automated Release (`release.yml`)**
+   - **Triggers**: Only on `push` to the `main` branch.
+   - **Function**: Uses Changesets to detect unreleased changes. It automatically creates a "Version Packages" PR with the generated changelogs and version bumps. Once merged, it tags the release.
+
+### Vercel Deployment
+
+- **Target App**: Automatically deploys the `apps/docs` (VitePress Knowledge Base).
+- **Trigger Mechanism**: Configured in the Vercel Dashboard to **only build on the `main` branch**.
+- **Build Ignored**: Commits to other development branches (like `develop`) are ignored to save build minutes and avoid unnecessary preview deployments.
