@@ -3427,7 +3427,7 @@ function isEmptyObj(obj) {
 ```js
 /**
  * reduce
- * @type {number[]}
+ * @types {number[]}
  */
 
 const arr = [3, 9, 4, 3, 6, 0, 9, 12]

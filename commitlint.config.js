@@ -1,9 +1,16 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import { defineConfig } from 'cz-git'
+
+const packages = fs.readdirSync(path.resolve('packages'))
+const apps = fs.readdirSync(path.resolve('apps'))
 
 export default defineConfig({
   extends: ['@commitlint/config-conventional'],
   prompt: {
     useEmoji: true,
+    scopes: [...apps, ...packages, 'root'],
+    allowCustomScopes: true,
     types: [
       { value: 'feat', name: 'feat:     新功能', emoji: '✨' },
       { value: 'fix', name: 'fix:      修复问题', emoji: '🐛' },

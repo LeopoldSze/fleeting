@@ -27,7 +27,7 @@
 1. 创建主进程窗口
 
    ```js
-   import { BrowserWindow } from 'electron' // package.json需配置 type: module
+   import { BrowserWindow } from 'electron' // package.json需配置 types: module
 
    const win = new BrowserWindow({
      width: 800,

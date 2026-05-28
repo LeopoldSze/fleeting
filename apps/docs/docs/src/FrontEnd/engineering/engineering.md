@@ -334,7 +334,7 @@ project
 `Angular提交规范`的格式包括`Header`、`Body`和`Footer`三个内容。`Header`为必填项，`Body`与`Footer`为可缺省项，这些内容通过以下结构组成一个完整的提交格式。
 
 ```bash
-<type>(<scope>): <subject>
+<types>(<scope>): <subject>
 # 空一行
 <body>
 # 空一行

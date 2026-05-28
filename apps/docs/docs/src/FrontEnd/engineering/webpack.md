@@ -1148,7 +1148,7 @@ module: {
   rules: [
     {
       test: require.resolve('./src/third-global.js'),
-      use: 'exports-loader?type=commonjs&exports=file,multiple|helpers.parse|parse'
+      use: 'exports-loader?types=commonjs&exports=file,multiple|helpers.parse|parse'
     }
   ]
 }

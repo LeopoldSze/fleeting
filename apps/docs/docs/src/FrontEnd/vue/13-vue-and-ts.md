@@ -261,7 +261,7 @@ const count = ref(0)
 // 推导得到的类型：ComputedRef<number>
 const double = computed(() => count.value * 2)
 
-// => TS Error: Property 'split' does not exist on type 'number'
+// => TS Error: Property 'split' does not exist on types 'number'
 const result = double.value.split('')
 ```
 

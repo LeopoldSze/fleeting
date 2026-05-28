@@ -7,7 +7,7 @@
     "paths": {
       "@/*": ["docs/src/*"]
     },
-    "types": ["bun", "vite/client", "vitepress", "vitepress/client"],
+    "types": ["vite/client", "vitepress", "vitepress/client"],
     "noEmit": true
   },
   "include": [
