@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SKIP_INSTALL_SIMPLE_GIT_HOOKS: '1'
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
     steps:
       - name: Checkout
@@ -23,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: pnpm
 
       - name: Install dependencies
