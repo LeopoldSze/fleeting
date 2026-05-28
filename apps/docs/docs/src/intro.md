@@ -300,7 +300,7 @@ export default config
 
 ```js [config.js]
 /**
- * @type {import('vitepress').UserConfig}
+ * @types {import('vitepress').UserConfig}
  */
 const config = {
   // ...

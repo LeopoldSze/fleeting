@@ -332,7 +332,7 @@ class Validator {
 
 /**
  * 策略对象
- * @type {{minLength(*, *, *): (*|undefined), isNonEmpty(*, *): (*|undefined), isMobile(*, *): (*|undefined)}}
+ * @types {{minLength(*, *, *): (*|undefined), isNonEmpty(*, *): (*|undefined), isMobile(*, *): (*|undefined)}}
  */
 const formStrategies = {
   isNonEmpty(value, errorMsg) {
@@ -521,7 +521,7 @@ compare(iterator([1, 2, 3]), iterator([1, 2, 3])) // iterator1和iterator2相等
 ```js
 /**
  * 发布-订阅模式
- * @type {{clientList: {}, trigger(...[*]): (boolean|undefined), listen(*, *): void}}
+ * @types {{clientList: {}, trigger(...[*]): (boolean|undefined), listen(*, *): void}}
  */
 const event = {
   clientList: {},
@@ -613,7 +613,7 @@ saleOffices.trigger('sm100', 200, '2023-06-30', 'large')
 ```js
 /**
  * 宏命令 - 组合模式
- * @type {{execute(): void}}
+ * @types {{execute(): void}}
  */
 const closeDoorCommand = {
   execute() {

@@ -1,0 +1,38 @@
+[
+  {
+    "time": 1761557282167,
+    "data": {
+      "uuid": "user-123",
+      "sdkVersion": "1.0.0",
+      "pageUrl": "http://localhost:3030/?ide_webview_request_time=1761557281777",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.104.3 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36",
+      "event": "error",
+      "targetKey": "resource",
+      "message": "resource load error",
+      "detail": {
+        "tagName": "img",
+        "resourceUrl": "http://localhost:3030/not-found.png"
+      },
+      "time": 1761557282164
+    }
+  },
+  {
+    "time": 1761610395478,
+    "data": {
+      "uuid": "user-123",
+      "sdkVersion": "1.0.0",
+      "pageUrl": "http://localhost:3030/?ide_webview_request_time=1761610395243",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Trae/1.104.3 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36",
+      "event": "error",
+      "targetKey": "resource",
+      "message": "resource load error",
+      "detail": {
+        "tagName": "img",
+        "resourceUrl": "http://localhost:3030/not-found.png"
+      },
+      "time": 1761610395476
+    }
+  }
+]

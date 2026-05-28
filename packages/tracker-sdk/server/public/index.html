@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tracker SDK 测试页</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+        padding: 20px;
+      }
+      button,
+      a {
+        margin: 8px 0;
+        display: inline-block;
+      }
+      code {
+        background: #f5f5f5;
+        padding: 2px 4px;
+      }
+      .block {
+        margin: 16px 0;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .grid {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tracker SDK 测试页</h1>
+    <p>
+      此页用于验证上报是否正常，以及上报数据结构。服务端在 <code>/track</code> 接收上报，<a
+        href="/__events"
+        target="_blank"
+        >/__events</a
+      >
+      可查看最近事件；<a href="/__events/download" target="_blank">下载 events.json</a>
+    </p>
+
+    <div class="block">
+      <h2>初始化</h2>
+      <p>脚本加载：<code>/dist/index.js</code>（IIFE，全局变量 <code>window.tracker</code>）</p>
+      <p>
+        设置 <code>requestUrl</code> = <code>/track</code>，开启
+        <code>historyTracker/hashTracker/domTracker/jsError</code>
+      </p>
+    </div>
+
+    <div class="block">
+      <h2>DOM 交互上报</h2>
+      <div class="grid">
+        <button id="btn1" data-track-key="btn-hello">带 data-track-key 的按钮</button>
+        <button id="btn2" class="inner-wrapper">
+          <span data-track-key="span-inner">内层元素有 data-track-key</span>
+        </button>
+        <button id="btn3" target-key="btn-legacy">旧属性名 target-key</button>
+        <button id="btn4" onclick="manualEvent()">手动上报自定义事件</button>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>路由上报</h2>
+      <div class="grid">
+        <button onclick="history.pushState({}, '', '/push-test?p=1')">history.pushState()</button>
+        <button onclick="history.replaceState({}, '', '/replace-test?p=2')">history.replaceState()</button>
+        <a href="#hash-test">改变 hash (#hash-test)</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>异常上报</h2>
+      <div class="grid">
+        <button onclick="triggerRuntimeError()">触发 JS 运行时错误</button>
+        <button onclick="triggerPromiseReject()">触发 Promise 未捕获错误</button>
+        <img src="/not-found.png" alt="broken image" />
+      </div>
+    </div>
+
+    <script src="/dist/index.js"></script>
+    <script>
+      const { Tracker } = window.tracker
+      const t = new Tracker({
+        requestUrl: '/track',
+        uuid: 'user-123',
+        historyTracker: true,
+        hashTracker: true,
+        domTracker: true,
+        jsError: true,
+      })
+      window.t = t
+
+      function manualEvent() {
+        t.sendTracker({ event: 'custom', targetKey: 'manual-event' })
+        alert('已发送自定义事件: custom/manual-event')
+      }
+
+      function triggerRuntimeError() {
+        // 运行时错误
+        throw new Error('测试运行时错误: runtime error demo')
+      }
+
+      function triggerPromiseReject() {
+        Promise.reject(new Error('测试 Promise 错误: unhandled rejection demo'))
+      }
+    </script>
+  </body>
+</html>

@@ -597,7 +597,7 @@ last = log -1 HEAD
 latest = for-each-ref --sort=-committerdate --format=\"%(committername)@%(refname:short) [%(committerdate:short)] %(contents)\"
 ls = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%cn]\" --decorate --date=short
 hist = log --pretty=format:\"%C(yellow)%h %C(red)%d %C(reset)%s %C(green)[%an] %C(blue)%ad\" --topo-order --graph --date=short
-type = cat-file -t
+types = cat-file -t
 dump = cat-file -p
 lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 ```
@@ -613,7 +613,7 @@ lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s
 ### 提交规范
 
 ```bash
-git commit -m <type>(<scope>?): <subject>
+git commit -m <types>(<scope>?): <subject>
 <BLANK LINE>
 <body>
 <BLANK LINE>

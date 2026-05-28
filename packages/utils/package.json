@@ -9,13 +9,12 @@
     }
   },
   "main": "dist/index.js",
-  "module": "index.ts",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "bun run src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "build": "tsup src/index.ts --format esm --dts",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit",
@@ -23,7 +22,7 @@
     "test": "echo 'No tests specified'"
   },
   "dependencies": {
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.18.1"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12"

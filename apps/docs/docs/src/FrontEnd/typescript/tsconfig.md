@@ -83,7 +83,7 @@
   "files": [
     "core.ts",
     "sys.ts",
-    "types.ts",
+    "index.ts",
     "scanner.ts"
   ]
 }

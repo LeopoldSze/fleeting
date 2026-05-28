@@ -311,7 +311,7 @@ const arr4 = [1, 2, 3] as const;
 元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。越界访问会报错。
 
 ```typescript
-// Declare a tuple type
+// Declare a tuple types
 let x: [string, number];
 
 // Initialize it
@@ -359,11 +359,11 @@ const point2: Readonly<[number, number]> = [1, 2];
 
 // Cannot assign to '0' because it is a read-only property.
 point[0] = 1;
-// Property 'push' does not exist on type 'readonly [number, number]'.
+// Property 'push' does not exist on types 'readonly [number, number]'.
 point.push(0);
-// Property 'pop' does not exist on type 'readonly [number, number]'.
+// Property 'pop' does not exist on types 'readonly [number, number]'.
 point.pop();
-// Property 'splice' does not exist on type 'readonly [number, number]'.
+// Property 'splice' does not exist on types 'readonly [number, number]'.
 point.splice(1, 1);
 ```
 
@@ -522,7 +522,7 @@ interface Config {
 ```typescript
 // const 断言收缩
 
-let t1 = <const>[1, 2, 'sze'] // type is readonly [1, 2, "sze"]
+let t1 = <const>[1, 2, 'sze'] // types is readonly [1, 2, "sze"]
 ```
 
 <br />
@@ -1120,7 +1120,7 @@ interface SetPoint {
   (x: number, y: number): void;
 }
 
-// type
+// types
 type Point = {
   x: number;
   y: number;
@@ -1270,7 +1270,7 @@ interface Person {
   age: number;
 }
 const sem: Person = { name: "semlinker", age: 30 };
-type Sem = typeof sem; // type Sem = Person
+type Sem = typeof sem; // types Sem = Person
 
 // 获取对象类型
 const Message = {
@@ -1384,8 +1384,8 @@ const person: Person = {
 
 getValues(person, ['name']) // ['musion']
 getValues(person, ['gender']) // 报错：
-// Argument of Type '"gender"[]' is not assignable to parameter of type '("name" | "age")[]'.
-// Type "gender" is not assignable to type "name" | "age".
+// Argument of Type '"gender"[]' is not assignable to parameter of types '("name" | "age")[]'.
+// Type "gender" is not assignable to types "name" | "age".
 ```
 
 <br />
@@ -1406,7 +1406,7 @@ type OptionalTestInterface<T> = {
 }
 
 type newTestInterface = OptionalTestInterface<TestInterface>
-// type newTestInterface = {
+// types newTestInterface = {
 //    name?:string,
 //    age?:number
 // }
@@ -1979,7 +1979,7 @@ http.run()
 }
 
 {
-    /* type checking */
+    /* types checking */
     allowUnreachableCode: undefined, // 无法访问的代码
     allowUnusedLabels: undefined, // 未使用的标签
     alwaysStrict: true if strict, false otherwise, // 确保您的文件在 ECMAScript 严格模式下解析，并为每个源文件发出“use strict”
@@ -2109,7 +2109,7 @@ interface ColorfulSub extends Colorful {
 
 // Interface 'ColorfulSub' incorrectly extends interface 'Colorful'.
 // Types of property 'color' are incompatible.
-// Type 'number' is not assignable to type 'string'.
+// Type 'number' is not assignable to types 'string'.
 ```
 
 2. 交叉类型取类型的交集
