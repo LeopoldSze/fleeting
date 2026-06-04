@@ -79,12 +79,12 @@ function getNavConfig(): NavItem[] {
     {
       text: '工具库',
       items: [
-        { text: 'JavaScript', link: '/FrontEnd/function/js' },
-        { text: 'CSS', link: '/FrontEnd/function/css' }
+        { text: 'JavaScript', link: '/frontEnd/function/js' },
+        { text: 'CSS', link: '/frontEnd/function/css' }
       ]
     },
-    { text: '核心方案', link: '/FrontEnd/other/core' },
-    { text: '常见问题', link: '/FrontEnd/other/problem' },
+    { text: '核心方案', link: '/frontEnd/other/core' },
+    { text: '常见问题', link: '/frontEnd/other/problem' },
     {
       text: '官方文档',
       items: [{ text: 'Vue', link: 'https://v3.cn.vuejs.org/guide/introduction.html' }]
@@ -100,12 +100,12 @@ function getSidebar() {
     {
       text: 'HTML',
       collapsed: true,
-      base: '/FrontEnd/html',
+      base: '/frontEnd/html/',
       items: [
-        { text: 'HTML5', link: '/html5.md' },
-        { text: 'IndexedDB', link: '/indexedDB' },
-        { text: 'Web Worker', link: '/webWorker' },
-        { text: '移动端适配', link: '/responsive' }
+        { text: 'HTML5', link: 'html5' },
+        { text: 'IndexedDB', link: 'indexedDB' },
+        { text: 'Web Worker', link: 'webWorker' },
+        { text: '移动端适配', link: 'responsive' }
       ]
     }
   ]
@@ -123,6 +123,7 @@ export default defineConfig({
   srcDir: 'src',
   srcExclude: ['**/README.md', '**/TODO.md'],
   outDir: './dist',
+  cleanUrls: true,
   ignoreDeadLinks: true,
   metaChunk: true,
   lastUpdated: true,
@@ -173,7 +174,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://LeopoldSze.github.io/sze-blog',
+        link: 'https://github.com/LeopoldSze/fleeting',
         ariaLabel: 'GitHub'
       },
       {
@@ -196,8 +197,7 @@ export default defineConfig({
       copyright: `Copyright © 2019-present Leopold-Sze`
     },
     notFound: {
-      title: '页面不见啦~',
-      quote: '久等百里蒹葭，伊人入画',
+      title: '页面不见了~',
       linkLabel: '回首页吧',
       linkText: '返回首页'
     }

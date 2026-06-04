@@ -8,6 +8,9 @@
   --vp-shadow-1: 0 2px 8px rgba(0, 0, 0, 0.08);
   --vp-shadow-2: 0 6px 16px rgba(0, 0, 0, 0.12);
   --vp-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.16);
+  --vp-sidebar-width: 260px;
+  --vp-sidebar-bg-color: color-mix(in srgb, var(--vp-c-bg) 78%, transparent);
+  --vp-sidebar-bg-color-dark: color-mix(in srgb, var(--vp-c-bg) 62%, transparent);
   --site-banner-h: 180px;
   --site-bg-image: url('/main.jpg');
   --site-bg-opacity: 0.16;
@@ -54,6 +57,7 @@ body::after {
 .dark {
   --site-bg-opacity: 0.11;
   --site-banner-opacity: 0.78;
+  --vp-sidebar-bg-color: var(--vp-sidebar-bg-color-dark);
 }
 
 .TopBanner {
@@ -118,6 +122,7 @@ body::after {
   background: color-mix(in srgb, var(--vp-c-bg) 70%, transparent);
   backdrop-filter: blur(14px);
   box-shadow: var(--vp-shadow-2);
+  overflow: hidden;
 
   .content-body {
     background-color: transparent !important;
@@ -125,8 +130,8 @@ body::after {
 }
 
 .VPNavBar.has-sidebar .container {
-  width: min(1152px, calc(100% - 320px));
-  margin: 10px 10px 10px 300px;
+  width: calc(100% - 32px);
+  margin: 10px auto 0;
 }
 
 .VPNavBar .container::before {
@@ -139,6 +144,39 @@ body::after {
     radial-gradient(600px 120px at 12% 0%, color-mix(in srgb, var(--vp-c-brand-1) 10%, transparent), transparent 70%),
     radial-gradient(560px 120px at 88% 0%, color-mix(in srgb, #41d1ff 8%, transparent), transparent 72%);
   opacity: 0.85;
+}
+
+@media (min-width: 960px) {
+  .VPSidebar {
+    width: var(--vp-sidebar-width) !important;
+    background: var(--vp-sidebar-bg-color) !important;
+    border-right: 1px solid color-mix(in srgb, var(--vp-c-divider) 85%, transparent);
+    backdrop-filter: blur(14px);
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    box-sizing: border-box;
+  }
+
+  .VPSidebar .nav {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .VPSidebarItem .item {
+    border-radius: 12px;
+  }
+
+  .VPSidebarItem.is-active > .item {
+    background: color-mix(in srgb, var(--vp-c-brand-1) 10%, transparent);
+  }
+}
+
+@media (min-width: 1440px) {
+  .VPSidebar {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    width: var(--vp-sidebar-width) !important;
+  }
 }
 
 .VPHome .VPHero {
@@ -741,21 +779,5 @@ body::after {
 
   .PostFooter__nav {
     grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 720px) {
-  .BlogList__card {
-    grid-column: span 6;
-  }
-
-  .TagList__post {
-    grid-column: span 6;
-  }
-}
-
-@media (min-width: 960px) {
-  .BlogList__card {
-    grid-column: span 4;
   }
 }
