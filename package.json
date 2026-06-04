@@ -31,12 +31,10 @@
   },
   "scripts": {
     "dev": "pnpm -r dev",
-    "dev:blog": "pnpm --filter @leopoldsze/blog dev",
     "dev:docs": "pnpm --filter @leopoldsze/docs dev",
     "dev:tracker-sdk": "pnpm --filter @leopoldsze/tracker-sdk dev",
     "dev:utils": "pnpm --filter @leopoldsze/utils dev",
     "build": "pnpm -r build",
-    "build:blog": "pnpm --filter @leopoldsze/blog build",
     "build:docs": "pnpm --filter @leopoldsze/docs build",
     "build:tracker-sdk": "pnpm --filter @leopoldsze/tracker-sdk build",
     "build:utils": "pnpm --filter @leopoldsze/utils build",

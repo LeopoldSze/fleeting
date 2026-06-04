@@ -1,13 +1,70 @@
+## 自动化部署与 CI/CD
+
+本项目接入了 **GitHub Actions** 与 **Vercel**，实现了完全自动化的代码校验与部署流水线。所有相关的云端触发行为被严格限制在 `main`（生产环境）分支，以避免开发过程中的冗余部署。
+
+### GitHub Actions (`.github/workflows/`)
+
+1. **CI 质量检查 (`ci.yml`)**
+   - **触发条件**: 仅当代码 `push` 到 `main` 分支，或提交指向 `main` 的 `Pull Request` 时触发。
+   - **作用**: 在云端自动安装依赖，执行完整的代码校验 (`pnpm lint:all`)、类型检查 (`pnpm typecheck`) 和打包构建 (`pnpm build`)。如果任何一步失败，PR 将无法被合并。
+
+2. **自动发版发布 (`release.yml`)**
+   - **触发条件**: 仅当代码 `push` 到 `main` 分支时触发。
+   - **作用**: 读取 `Changesets` 意图文件。如果有未消耗的 changeset，会自动创建一个名为 `Version Packages` 的 PR（里面包含变更日志和版本更新）。合并该 PR 后，代码会自动打上对应版本的 Tag 并发布。
+
+### Vercel 云端部署
+
+- **部署应用**: 自动检测并部署 `apps/docs` (VitePress 知识库)。
+- **触发机制**: Vercel 已在控制台配置为 **仅监听 `main` 分支**。
+- **构建拦截**: 默认情况下其他开发分支 (如 `develop`) 的提交将被 Vercel 拦截 (Ignored Build Step)，从而节约云端构建时长和性能额度。
+
+## 工程化与踩坑记录 (2026 版)
+
+为了防止长时间未维护后遗忘关键的配置细节，特此记录本项目的核心工程化“避坑指南”。
+
+### 1. 全局配置与安全依赖安装 (`.npmrc`)
+本项目在根目录的 `.npmrc` 中配置了：
+```ini
+ignore-scripts=false
+allow-scripts=simple-git-hooks
+```
+**背景与价值**：
+- 在高版本 pnpm 环境下，默认会执行所有包的 `postinstall` 脚本，这存在安全隐患。
+- 通过 `allow-scripts` 白名单机制，我们**仅允许**可信的 `simple-git-hooks` 执行钩子注入。这既保障了本地开发的安全性，又实现了 Git Hooks 的自动化注册。
+
+### 2. CI/CD 环境的静默安装隔离
+在 GitHub Actions (`ci.yml`, `release.yml`) 中，我们的安装命令使用了：
+```bash
+pnpm install --frozen-lockfile --ignore-scripts
+```
+**背景与价值**：
+- CI/CD 是无交互的沙盒环境，在云端尝试执行本地 Git Hooks 注入不仅毫无意义，反而会被严格的云端权限策略拦截，导致 `[ERR_PNPM_IGNORED_BUILDS]` 报错导致整个部署崩溃。
+- 加上 `--ignore-scripts` 后，能够让云端彻底屏蔽所有副作用，实现最纯净、最快速的依赖安装。
+
+### 3. Vercel 子项目部署的关键配置
+因为是 Monorepo，在 Vercel 部署子项目（如 VitePress）时绝不能将 Root Directory 指向子目录，否则会丢失整个工作区的上下文关联。
+在 Vercel 后台的 `apps/docs` 项目设置中，必须采用如下配置：
+- **Root Directory**: 保持为空 (指向项目根目录)
+- **Build Command**: `pnpm --filter @leopoldsze/docs build` (指定打包该子包)
+- **Output Directory**: `apps/docs/docs/.vitepress/dist` (指向完整的相对路径)
+- **Install Command**: `pnpm install --frozen-lockfile` (保持最干净的安装)
+- **Ignored Build Step**: `bash -c "[[ $VERCEL_GIT_COMMIT_REF != 'main' ]]"` (拦截所有非主分支的构建)
+
+### 4. Node.js LTS 升级平滑过渡
+- **本地环境**：通过 `package.json` 中的 `volta` 字段，全局锁定了 **Node.js 24**。团队成员只要装了 Volta，进入项目目录就会自动切换到正确版本。
+- **CI 环境预警处理**：在 GitHub Actions 中不仅将 `setup-node` 升级到了 `v4` 和 `node-version: '24'`，还额外配置了环境变量 `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'`，从而彻底消除了 GitHub 官方对 Node.js 20 弃用的警告提示，实现了与 2026 年技术栈的完美接轨。
+
+
 **总体方案**
 
 - 单一仓库使用 `pnpm` workspaces 管理所有应用与库，结合 `changesets` 负责包版本与变更日志；可选 `turborepo` 做任务编排与缓存加速。
-- 三类应用：`VitePress` 博客（静态站），后台管理（React 19 或 Vue 3），门户站（Next.js 或 Nuxt）。
+- 三类应用：`VitePress` 博客/文档站（静态站），后台管理（React 19 或 Vue 3），门户站（Next.js 或 Nuxt）。
 - 库与插件：抽离到 `packages/` 复用（UI、utils、主题、VitePress 插件、Node 脚本等）。
 - 部署与自动化：GitHub Actions 统一 CI；部署使用免费平台（Cloudflare Pages、Vercel、Netlify、GitHub Pages）。
 
 **目录结构**
 
-- `apps/blog`：VitePress 博客站点（纯静态，内嵌主题配置或依赖 `@sugarat/theme`）。
+- `apps/docs`：VitePress 博客/文档站点（纯静态，内嵌主题配置）。
 - `apps/admin`：后台管理（React 19 + Vite 或 Vue 3 + Vite）。
 - `apps/portal`：门户官网（Next.js or Nuxt）。
 - `packages/theme`：VitePress 主题包（含 `node.mjs` 导出与文档）。
@@ -44,7 +101,7 @@
 **Workspace 脚本示例**
 
 - 根 `package.json`：
-  - `dev`：`pnpm --filter apps/blog dev`、`pnpm --filter apps/admin dev`、`pnpm --filter apps/portal dev`
+  - `dev`：`pnpm --filter apps/docs dev`、`pnpm --filter apps/admin dev`、`pnpm --filter apps/portal dev`
   - `build`：`pnpm -r build` 或 `pnpm -r --filter ./apps/* build`
   - `buildlib`：`pnpm run /^build:.*/`（构建 `packages/*`，你当前仓库已采用此模式）
   - `lint`：`pnpm -r lint`；`typecheck`：`pnpm -r typecheck`
@@ -52,10 +109,10 @@
 
 示例：
 
-- `"dev:blog": "pnpm --filter ./apps/blog dev"`
+- `"dev:docs": "pnpm --filter ./apps/docs dev"`
 - `"dev:admin": "pnpm --filter ./apps/admin dev"`
 - `"dev:portal": "pnpm --filter ./apps/portal dev"`
-- `"build:blog": "pnpm --filter ./apps/blog build"`
+- `"build:docs": "pnpm --filter ./apps/docs build"`
 - `"build:theme": "pnpm --filter @sugarat/theme build:node"`
 - `"buildlib": "pnpm run /^build:.*/"`
 
@@ -67,7 +124,7 @@
   - 工程任务：`pnpm -r lint && pnpm -r typecheck && pnpm -r test && pnpm -r build`。
 - 部署策略：
   - 博客（VitePress）：
-    - `Cloudflare Pages`（支持 monorepo 子目录），构建命令 `pnpm --filter ./apps/blog build`，输出目录 `.vitepress/dist`。
+    - `Cloudflare Pages`（支持 monorepo 子目录），构建命令 `pnpm --filter ./apps/docs build`，输出目录 `apps/docs/docs/.vitepress/dist`。
     - 备选：`GitHub Pages` 用 `peaceiris/actions-gh-pages` 推送 `gh-pages` 分支。
   - 门户（Next/Nuxt）：
     - `Vercel`（Next）或 `Netlify/Cloudflare Pages`（Nuxt）；连接仓库自动部署，设置子目录与构建命令。
@@ -96,7 +153,7 @@
   - `pnpm` monorepo、`changesets`、`packages/theme` 与多插件（`announcement`、`rss`、`pagefind`、`51la`）已具备良好基础。
   - 构建脚本 `buildlib` 已串联各包产物。
 - 建议调整：
-  - 路径归类：将 `packages/blogpress` 移至 `apps/blog`，保留 `packages/theme`、`packages/plugins/*` 作为可发布组件。
+  - 路径归类：将站点能力集中在 `apps/docs`，保留 `packages/*` 作为可复用组件。
   - 根脚本：把当前 `"dev": "pnpm --filter blogpress dev"` 扩展为多应用脚本（示例见上），并新增 `dev:admin`、`dev:portal`。
   - 主题产物：确保 `@sugarat/theme` 的 `node.mjs/node.js/node.d.ts` 构建稳定（你已修复），在 CI 里加入 `pnpm buildlib` 作为前置。
   - 文档与部署：将 `deploy-theme.mjs` 迁入 `tools/` 并文档化，优先使用 Cloudflare/Vercel 自动部署，减少手工 `scp`。
