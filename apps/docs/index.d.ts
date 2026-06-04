@@ -1,5 +1,5 @@
 /**
- * This file is used to declare modules that don't have typescript support
+ * 该文件用于声明不支持typescript的模块类型定义
  */
 
 /**
@@ -18,6 +18,18 @@ declare module '*.vue' {
 
   const component: DefineComponent<object, object, any>
   export default component
+}
+
+declare module '*.data' {
+  export const data: any
+  const loader: any
+  export default loader
+}
+
+declare module '*.data.ts' {
+  export const data: any
+  const loader: any
+  export default loader
 }
 
 /**

@@ -8,7 +8,6 @@
 
 本项目使用 `pnpm workspace` 管理的 Monorepo 架构，包含以下应用和包：
 
-- `apps/blog`: 博客应用
 - `apps/docs`: 知识库与技术文档 (基于 VitePress)
 - `packages/tracker-sdk`: 前端埋点 SDK
 - `packages/utils`: 公共工具函数库

@@ -2,19 +2,16 @@
 layout: home
 
 hero:
-  name: "Leopold Docs"
-  text: "Explore The Shape of The Future"
-  tagline: 🔍 探索未来的形状
+  name: "Leopold Blog"
+  text: "Explore The Shape of The Unknown"
+  tagline: 🔍 探索未知的形状
   image:
     src: /main.jpg
     alt: background image
   actions:
     - theme: brand
       text: 起步 🚀
-      link: /FrontEnd/html/html5
-    - theme: alt
-      text: README 💫
-      link: /intro
+      link: /frontEnd/html/html5
 
 features:
   - icon: 📚

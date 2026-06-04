@@ -107,229 +107,6 @@ function getSidebar() {
         { text: 'Web Worker', link: '/webWorker' },
         { text: '移动端适配', link: '/responsive' }
       ]
-    },
-    {
-      text: 'CSS',
-      collapsed: true,
-      base: '/FrontEnd/css',
-      items: [
-        { text: 'CSS2.1', link: '/css' },
-        { text: '选择器', link: '/selector' },
-        { text: 'CSS3', link: '/css3' },
-        { text: 'Less', link: '/less' }
-      ]
-    },
-    {
-      text: 'JavaScript',
-      collapsed: true,
-      base: '/FrontEnd/javascript',
-      items: [
-        { text: '基础', link: '/js' },
-        { text: 'Promise', link: '/promise' },
-        { text: '手写实现', link: '/handWriting' },
-        { text: '设计模式', link: '/pattern' },
-        { text: 'Deno', link: '/deno' }
-      ]
-    },
-    {
-      text: 'NodeJS',
-      collapsed: true,
-      base: '/FrontEnd/nodejs',
-      items: [
-        { text: 'NodeJS', link: '/nodejs' },
-        { text: 'Bun', link: '/bun' }
-      ]
-    },
-    {
-      text: 'Vue',
-      collapsed: true,
-      base: '/FrontEnd/vue',
-      items: [
-        { text: '简介', link: '/1-introduction' },
-        { text: '应用创建', link: '/2-application' },
-        { text: '模板语法', link: '/3-template' },
-        { text: '响应式', link: '/4-reactivity' },
-        { text: '计算属性', link: '/5-computed' },
-        { text: '类与样式绑定', link: '/6-class-and-style' },
-        { text: '渲染', link: '/7-render' },
-        { text: '事件处理及表单', link: '/8-event-handling' },
-        { text: '生命周期钩子', link: '/9-lifecycle' },
-        { text: '侦听器和模板引用', link: '/10-watchers-and-refs' },
-        { text: '组件', link: '/11-component' },
-        { text: '逻辑复用和自定义指令', link: '/12-logic-reuse' },
-        { text: '内置组件', link: '/13-inside-components' },
-        { text: '搭配ts', link: '/13-vue-and-ts' },
-        { text: 'API', link: '/14-global-api' },
-        { text: '性能优化', link: '/15-performance' },
-        { text: '工程化配置', link: '/16-engineering' },
-        { text: 'vue-router', link: '/20-router' },
-        { text: 'Pinia', link: '/pinia' },
-        { text: 'Vue CLI 项目构建', link: '/vue-cli' },
-        { text: 'Vue2 原理', link: '/vue2' }
-      ]
-    },
-    {
-      text: 'React',
-      collapsed: true,
-      base: '/FrontEnd/react',
-      items: [{ text: '基础', link: '/base' }]
-    },
-    {
-      text: 'TypeScript',
-      collapsed: true,
-      base: '/FrontEnd/typescript',
-      items: [
-        { text: '基础', link: '/basic' },
-        { text: 'tsconfig', link: '/tsconfig' },
-        { text: '声明文件', link: '/declaration-files' }
-      ]
-    },
-    {
-      text: '工具链',
-      collapsed: true,
-      base: '/FrontEnd/engineering',
-      items: [
-        { text: 'NPM', link: '/npm' },
-        { text: 'Git', link: '/git' },
-        { text: '前端工程化', link: '/engineering' },
-        { text: '前端路由', link: '/router' },
-        { text: 'Browserslist', link: '/browserslist' },
-        { text: 'Semver', link: '/semver' }
-      ]
-    },
-    {
-      text: '浏览器&网络',
-      collapsed: true,
-      base: '/FrontEnd/browser',
-      items: [
-        { text: '缓存', link: '/cache' },
-        { text: '网络', link: '/network' }
-      ]
-    },
-    {
-      text: '数据结构&算法',
-      collapsed: true,
-      base: '/FrontEnd/algorithm',
-      items: [
-        { text: '数据结构', link: '/data-structure' },
-        { text: '算法', link: '/algorithm' }
-      ]
-    },
-    {
-      text: '跨平台',
-      collapsed: true,
-      base: '/FrontEnd/cross-platform',
-      items: [
-        { text: 'Electron', link: '/electron' },
-        { text: 'Flutter', link: '/flutter' }
-      ]
-    },
-    {
-      text: '图形',
-      collapsed: true,
-      base: '/FrontEnd/graph',
-      items: [
-        { text: 'Canvas', link: '/canvas' },
-        { text: 'WebGL', link: '/webgl' },
-        { text: 'ThreeJS', link: '/threejs' }
-      ]
-    },
-    {
-      text: '后端',
-      collapsed: true,
-      base: '/BackEnd',
-      items: [
-        { text: 'MongoDB', link: '/mongodb' },
-        { text: 'NestJS', link: '/nestjs' },
-        { text: 'Java', link: '/java' },
-        { text: 'MySQL', link: '/mysql' },
-        { text: 'JDBC', link: '/JDBC' }
-      ]
-    },
-    {
-      text: '运维',
-      collapsed: true,
-      base: '/DevOps',
-      items: [
-        {
-          text: 'Linux',
-          link: '/linux'
-        },
-        {
-          text: 'Docker',
-          link: '/docker'
-        }
-      ]
-    },
-    {
-      text: '开发工具',
-      collapsed: true,
-      base: '/Tools',
-      items: [
-        { text: 'WebStorm', link: '/webstorm' },
-        { text: 'Markdown', link: '/markdown' },
-        { text: 'YAML', link: '/yaml' },
-        { text: 'TOML', link: '/toml' },
-        { text: 'Cmder', link: '/cmder' }
-      ]
-    },
-    {
-      text: '源码解析',
-      collapsed: true,
-      base: '/FrontEnd/source',
-      items: [{ text: 'Axios', link: '/axios' }]
-    },
-    {
-      text: '面试',
-      collapsed: true,
-      base: '/Interview',
-      items: [
-        {
-          text: 'HTML',
-          link: '/html'
-        },
-        {
-          text: 'CSS',
-          link: '/css'
-        },
-        {
-          text: 'JavaScript',
-          link: '/js'
-        },
-        {
-          text: '浏览器',
-          link: '/browser'
-        },
-        {
-          text: 'Vue',
-          link: '/vue'
-        },
-        { text: 'React', link: '/react' },
-        { text: '微前端', link: '/microfrontend' },
-        {
-          text: '综合',
-          link: '/synthesis'
-        }
-      ]
-    },
-    {
-      text: '媒体',
-      collapsed: true,
-      base: '/Media',
-      items: [
-        {
-          text: '英语',
-          link: '/english'
-        }
-        /* {
-          text: '电影',
-          link: '/movie'
-        },
-        {
-          text: '历史',
-          link: '/history'
-        } */
-      ]
     }
   ]
 }
@@ -338,28 +115,19 @@ export default defineConfig({
   /**
    * 站点元数据
    */
-  title: 'Leopold-Sze Site',
-  description: 'Leopold-Sze的小站',
+  title: 'Leopold-Sze Blog',
+  description: 'Leopold-Sze的博客网站',
   head: getHeadMetaConfig(),
   lang: 'zh-CN',
   base: '/',
-  /**
-   * 构建
-   */
   srcDir: 'src',
   srcExclude: ['**/README.md', '**/TODO.md'],
   outDir: './dist',
   ignoreDeadLinks: true,
   metaChunk: true,
-  /**
-   * 主题
-   */
   lastUpdated: true,
-  /**
-   * 自定义
-   */
   markdown: {
-    lineNumbers: true, // 启用代码行号
+    lineNumbers: true,
     container: {
       tipLabel: '提示',
       warningLabel: '注意',
@@ -368,7 +136,7 @@ export default defineConfig({
       detailsLabel: '详情'
     },
     image: {
-      lazyLoading: true // 为所有图片启用懒加载
+      lazyLoading: true
     }
   },
   vite: {
@@ -381,9 +149,6 @@ export default defineConfig({
     }
   },
   vue: {},
-  /**
-   * 默认主题配置
-   */
   themeConfig: {
     logo: {
       light: '/main.jpg',
@@ -394,13 +159,7 @@ export default defineConfig({
     sidebarMenuLabel: '目录',
     sidebar: getSidebar(),
     outline: {
-      /**
-       * 大纲标题
-       */
       label: '本页目录',
-      /**
-       * 识别<h2>-<h4>的标题
-       */
       level: [2, 5]
     },
     search: {

@@ -8,7 +8,6 @@ Something that might be useful. A modern Monorepo project built with pnpm worksp
 
 This repository uses a Monorepo architecture managed by `pnpm workspace`, containing the following packages and applications:
 
-- `apps/blog`: Blog application
 - `apps/docs`: Knowledge base & Documentation (powered by VitePress)
 - `packages/tracker-sdk`: Front-end tracking SDK
 - `packages/utils`: Shared utility functions

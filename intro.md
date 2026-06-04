@@ -58,13 +58,13 @@ pnpm install --frozen-lockfile --ignore-scripts
 **总体方案**
 
 - 单一仓库使用 `pnpm` workspaces 管理所有应用与库，结合 `changesets` 负责包版本与变更日志；可选 `turborepo` 做任务编排与缓存加速。
-- 三类应用：`VitePress` 博客（静态站），后台管理（React 19 或 Vue 3），门户站（Next.js 或 Nuxt）。
+- 三类应用：`VitePress` 博客/文档站（静态站），后台管理（React 19 或 Vue 3），门户站（Next.js 或 Nuxt）。
 - 库与插件：抽离到 `packages/` 复用（UI、utils、主题、VitePress 插件、Node 脚本等）。
 - 部署与自动化：GitHub Actions 统一 CI；部署使用免费平台（Cloudflare Pages、Vercel、Netlify、GitHub Pages）。
 
 **目录结构**
 
-- `apps/blog`：VitePress 博客站点（纯静态，内嵌主题配置或依赖 `@sugarat/theme`）。
+- `apps/docs`：VitePress 博客/文档站点（纯静态，内嵌主题配置）。
 - `apps/admin`：后台管理（React 19 + Vite 或 Vue 3 + Vite）。
 - `apps/portal`：门户官网（Next.js or Nuxt）。
 - `packages/theme`：VitePress 主题包（含 `node.mjs` 导出与文档）。
@@ -101,7 +101,7 @@ pnpm install --frozen-lockfile --ignore-scripts
 **Workspace 脚本示例**
 
 - 根 `package.json`：
-  - `dev`：`pnpm --filter apps/blog dev`、`pnpm --filter apps/admin dev`、`pnpm --filter apps/portal dev`
+  - `dev`：`pnpm --filter apps/docs dev`、`pnpm --filter apps/admin dev`、`pnpm --filter apps/portal dev`
   - `build`：`pnpm -r build` 或 `pnpm -r --filter ./apps/* build`
   - `buildlib`：`pnpm run /^build:.*/`（构建 `packages/*`，你当前仓库已采用此模式）
   - `lint`：`pnpm -r lint`；`typecheck`：`pnpm -r typecheck`
@@ -109,10 +109,10 @@ pnpm install --frozen-lockfile --ignore-scripts
 
 示例：
 
-- `"dev:blog": "pnpm --filter ./apps/blog dev"`
+- `"dev:docs": "pnpm --filter ./apps/docs dev"`
 - `"dev:admin": "pnpm --filter ./apps/admin dev"`
 - `"dev:portal": "pnpm --filter ./apps/portal dev"`
-- `"build:blog": "pnpm --filter ./apps/blog build"`
+- `"build:docs": "pnpm --filter ./apps/docs build"`
 - `"build:theme": "pnpm --filter @sugarat/theme build:node"`
 - `"buildlib": "pnpm run /^build:.*/"`
 
@@ -124,7 +124,7 @@ pnpm install --frozen-lockfile --ignore-scripts
   - 工程任务：`pnpm -r lint && pnpm -r typecheck && pnpm -r test && pnpm -r build`。
 - 部署策略：
   - 博客（VitePress）：
-    - `Cloudflare Pages`（支持 monorepo 子目录），构建命令 `pnpm --filter ./apps/blog build`，输出目录 `.vitepress/dist`。
+    - `Cloudflare Pages`（支持 monorepo 子目录），构建命令 `pnpm --filter ./apps/docs build`，输出目录 `apps/docs/docs/.vitepress/dist`。
     - 备选：`GitHub Pages` 用 `peaceiris/actions-gh-pages` 推送 `gh-pages` 分支。
   - 门户（Next/Nuxt）：
     - `Vercel`（Next）或 `Netlify/Cloudflare Pages`（Nuxt）；连接仓库自动部署，设置子目录与构建命令。
@@ -153,7 +153,7 @@ pnpm install --frozen-lockfile --ignore-scripts
   - `pnpm` monorepo、`changesets`、`packages/theme` 与多插件（`announcement`、`rss`、`pagefind`、`51la`）已具备良好基础。
   - 构建脚本 `buildlib` 已串联各包产物。
 - 建议调整：
-  - 路径归类：将 `packages/blogpress` 移至 `apps/blog`，保留 `packages/theme`、`packages/plugins/*` 作为可发布组件。
+  - 路径归类：将站点能力集中在 `apps/docs`，保留 `packages/*` 作为可复用组件。
   - 根脚本：把当前 `"dev": "pnpm --filter blogpress dev"` 扩展为多应用脚本（示例见上），并新增 `dev:admin`、`dev:portal`。
   - 主题产物：确保 `@sugarat/theme` 的 `node.mjs/node.js/node.d.ts` 构建稳定（你已修复），在 CI 里加入 `pnpm buildlib` 作为前置。
   - 文档与部署：将 `deploy-theme.mjs` 迁入 `tools/` 并文档化，优先使用 Cloudflare/Vercel 自动部署，减少手工 `scp`。
