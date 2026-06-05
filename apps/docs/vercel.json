@@ -15,5 +15,11 @@
       "destination": "https://doc.leopoldsze.top/:path*",
       "permanent": true
     }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
