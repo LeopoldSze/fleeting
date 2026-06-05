@@ -197,8 +197,8 @@ export default defineConfig({
       copyright: `Copyright © 2019-present Leopold-Sze`
     },
     notFound: {
-      title: '页面不见了~',
-      linkLabel: '回首页吧',
+      title: '页面不见了',
+      quote: '页面不存在，或已被删除',
       linkText: '返回首页'
     }
   }
