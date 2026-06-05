@@ -2,48 +2,69 @@
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { nextTick, onBeforeUnmount, onMounted, provide, ref } from 'vue'
+import BackToTop from './components/BackToTop.vue'
 import HomeLatest from './components/HomeLatest.vue'
 import PostFooter from './components/PostFooter.vue'
 import PostHeader from './components/PostHeader.vue'
 
+// 获取深色模式状态
 const { isDark } = useData()
-const randomQuote = ref('')
 
-const quotes = [
-  '探索未知的形状，发现无限的可能',
-  '代码是思想的具现，逻辑是智慧的延伸',
-  '每一次学习都是对世界的重新认识',
-  '技术改变生活，创新引领未来',
-  '在知识的海洋中，我们都是探索者',
-  '简单是复杂的极致，优雅是功能的升华',
-  '编程不仅是技能，更是创造的艺术',
-  '持续学习，持续进步，持续创造',
-  '细节决定成败，思考决定高度',
-  '用代码书写未来，用技术改变世界'
-]
+// 随机名言相关
+const randomQuote = ref('加载中...')
+let refreshTimer: number | null = null
 
-function getRandomQuote() {
-  return quotes[Math.floor(Math.random() * quotes.length)]
+/**
+ * 从 一言 接口获取数据
+ *
+ * 接口说明：
+ * - 地址：https://v1.hitokoto.cn/
+ * - 作用：随机返回一句动漫、游戏、文学等类型的名言
+ * - 返回字段：hitokoto (句子内容), from (出处), from_who (作者) 等
+ */
+async function fetchQuote() {
+  try {
+    const response = await fetch('https://v1.hitokoto.cn/')
+    // 检查网络请求是否成功
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    // 组合句子和出处，让显示更完整
+    // data.hitokoto: 句子内容, data.from: 出处
+    randomQuote.value = `✨ ${data.hitokoto} —— 「${data.from || '未知出处'}」`
+  }
+  catch (error) {
+    // 请求失败时，显示一个备用的友好提示，避免页面空白
+    console.error('获取一言失败:', error)
+    randomQuote.value = '✨ 代码是思想的具现，逻辑是智慧的延伸 —— 「佚名」'
+  }
 }
 
-function updateQuote() {
-  randomQuote.value = getRandomQuote() ?? ''
+/**
+ * 手动刷新名言
+ */
+function refreshQuote() {
+  fetchQuote()
 }
-
-let quoteTimer: number | undefined
 
 onMounted(() => {
-  updateQuote()
-  quoteTimer = window.setInterval(updateQuote, 30000)
+  fetchQuote()
+  // 设置定时器，每隔 60 秒自动刷新一次名言，增加页面的活跃感
+  refreshTimer = window.setInterval(() => {
+    fetchQuote()
+  }, 60000)
 })
 
+// 组件销毁前清理定时器，防止内存泄漏
 onBeforeUnmount(() => {
-  if (quoteTimer) {
-    window.clearInterval(quoteTimer)
-    quoteTimer = undefined
+  if (refreshTimer) {
+    clearInterval(refreshTimer)
+    refreshTimer = null
   }
 })
 
+// 深色模式切换动画
 function enableTransitions() {
   return 'startViewTransition' in document
     && window.matchMedia('(prefers-reduced-motion: no-preference)').matches
@@ -82,46 +103,28 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 <template>
   <div class="TopBanner" aria-hidden="true" />
   <DefaultTheme.Layout>
+    <!-- 首页 Hero 区域下方添加随机名言 -->
     <template #home-hero-after>
-      <div class="random-quote" @click="updateQuote">
+      <div class="random-quote" @click="refreshQuote">
         {{ randomQuote }}
+        <span class="refresh-icon" style="margin-left: 8px; font-size: 14px; opacity: 0.6;">↻</span>
       </div>
     </template>
 
+    <!-- 首页特性区域下方添加最新文章列表 -->
     <template #home-features-after>
       <HomeLatest />
     </template>
+
+    <!-- 文档内容前添加文章头部信息 -->
     <template #doc-before>
       <PostHeader />
     </template>
+
+    <!-- 文档内容后添加文章底部导航 -->
     <template #doc-after>
       <PostFooter />
     </template>
   </DefaultTheme.Layout>
+  <BackToTop />
 </template>
-
-<style>
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(root),
-.dark::view-transition-new(root) {
-  z-index: 1;
-}
-
-::view-transition-new(root),
-.dark::view-transition-old(root) {
-  z-index: 9999;
-}
-
-.VPSwitchAppearance {
-  width: 22px !important;
-}
-
-.VPSwitchAppearance .check {
-  transform: none !important;
-}
-</style>

@@ -40,3 +40,24 @@ const latest = computed(() => posts.value.slice(0, 4)) // 只显示4篇最新文
     </section>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.HomeLatest {
+  margin: 48px auto 0;
+  max-width: 1152px;
+}
+
+.HomeLatest__panel {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 24px;
+  background: var(--vp-c-bg-soft);
+  padding: 32px;
+  box-shadow: var(--vp-shadow-2);
+  transition: all 0.3s ease;
+}
+
+.HomeLatest__panel:hover {
+  box-shadow: var(--vp-shadow-3);
+  transform: translateY(-4px);
+}
+</style>
