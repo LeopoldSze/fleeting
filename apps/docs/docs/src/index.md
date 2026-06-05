@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 起步 🚀
-      link: /frontEnd/html/html5
+      link: /front/html/html5
     - theme: alt
       text: GitHub
       link: https://github.com/LeopoldSze/fleeting

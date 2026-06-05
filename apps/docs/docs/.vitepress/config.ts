@@ -79,12 +79,12 @@ function getNavConfig(): NavItem[] {
     {
       text: '工具库',
       items: [
-        { text: 'JavaScript', link: '/frontEnd/function/js' },
-        { text: 'CSS', link: '/frontEnd/function/css' }
+        { text: 'JavaScript', link: '/front/function/js' },
+        { text: 'CSS', link: '/front/function/css' }
       ]
     },
-    { text: '核心方案', link: '/frontEnd/other/core' },
-    { text: '常见问题', link: '/frontEnd/other/problem' },
+    { text: '核心方案', link: '/front/other/core' },
+    { text: '常见问题', link: '/front/other/problem' },
     {
       text: '官方文档',
       items: [{ text: 'Vue', link: 'https://v3.cn.vuejs.org/guide/introduction.html' }]
@@ -100,7 +100,7 @@ function getSidebar() {
     {
       text: 'HTML',
       collapsed: true,
-      base: '/frontEnd/html/',
+      base: '/front/html/',
       items: [
         { text: 'HTML5', link: 'html5' },
         { text: 'IndexedDB', link: 'indexedDB' },
