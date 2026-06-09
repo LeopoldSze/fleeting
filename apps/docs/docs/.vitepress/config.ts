@@ -113,10 +113,17 @@ interface DocFrontmatter {
    */
   order?: number
   /**
-   * 是否出现在侧边栏。
-   * - `false` 会隐藏该页面，但页面仍可通过 URL 访问
+   * 是否出现在侧边栏（仅影响“侧边栏条目是否生成”）。
+   * - `false` 会隐藏该页面条目，但页面仍可通过 URL 访问
+   * - 适合用于：页面通过 nav/首页入口访问，但不希望在侧边栏出现
    */
-  sidebar?: boolean
+  inSidebar?: boolean | 'false' | 'true'
+  /**
+   * VitePress 内置字段：是否渲染侧边栏组件。
+   * - `false` 会让当前页面完全不显示侧边栏（即使当前分区还有其它条目）
+   * - 如需“隐藏条目但仍显示侧边栏”，请使用 `inSidebar: false`
+   */
+  sidebar?: boolean | 'false' | 'true'
 }
 
 interface FileNode {
@@ -153,6 +160,14 @@ function formatDirLabel(key: string) {
 
 function safeOrder(input: unknown, fallback: number) {
   return typeof input === 'number' && Number.isFinite(input) ? input : fallback
+}
+
+function isFalseLike(input: unknown) {
+  if (input === false)
+    return true
+  if (typeof input === 'string')
+    return input.trim().toLowerCase() === 'false'
+  return input === 0
 }
 
 function formatSectionLabel(key: string) {
@@ -202,7 +217,7 @@ function buildDirTreeFromSrc(srcRoot: string) {
 
     const absFile = path.join(srcRoot, relFile)
     const fm = readFrontmatter(absFile)
-    if (fm.sidebar === false)
+    if (isFalseLike(fm.inSidebar) || isFalseLike(fm.sidebar))
       continue
 
     const basename = segments.at(-1) ?? ''

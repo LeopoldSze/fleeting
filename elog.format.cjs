@@ -34,7 +34,7 @@ function extractUserFrontMatter(body) {
   const content = text.slice(end + 3).replace(/^\r?\n/, '')
 
   const data = {}
-  const keyRe = /(title|slug|order|sidebar|date|updated)\s*:\s*/g
+  const keyRe = /(title|slug|order|sidebar|inSidebar|date|updated)\s*:\s*/g
   const keys = []
   for (let match = keyRe.exec(rawBlock); match !== null; match = keyRe.exec(rawBlock))
     keys.push({ key: match[1], start: match.index + match[0].length })
@@ -48,7 +48,7 @@ function extractUserFrontMatter(body) {
       if (Number.isFinite(n))
         data[key] = n
     }
-    else if (key === 'sidebar') {
+    else if (key === 'sidebar' || key === 'inSidebar') {
       if (valueRaw === 'false' || valueRaw === 'true')
         data[key] = valueRaw === 'true'
     }
@@ -68,6 +68,12 @@ function format(doc) {
 
   const extracted = extractUserFrontMatter(doc.body || '')
   const userFM = extracted.data || {}
+
+  if (Object.prototype.hasOwnProperty.call(userFM, 'sidebar')) {
+    if (userFM.sidebar === false)
+      userFM.inSidebar = false
+    delete userFM.sidebar
+  }
 
   const rawUrlname = doc.properties && doc.properties.urlname ? String(doc.properties.urlname).trim() : ''
   const normalizedUrlname = /^[A-Z0-9_-]+$/.test(rawUrlname) ? rawUrlname.toLowerCase() : rawUrlname
@@ -92,7 +98,7 @@ function format(doc) {
   const normalized = matter(doc.body || '')
   const nextData = normalized.data || {}
 
-  const allowed = new Set(['title', 'slug', 'order', 'sidebar', 'date', 'updated'])
+  const allowed = new Set(['title', 'slug', 'order', 'inSidebar', 'date', 'updated'])
   Object.keys(nextData).forEach((k) => {
     if (!allowed.has(k))
       delete nextData[k]
