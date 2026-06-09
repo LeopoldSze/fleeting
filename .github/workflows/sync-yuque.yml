@@ -1,0 +1,45 @@
+name: Sync Yuque
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 20 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SKIP_INSTALL_SIMPLE_GIT_HOOKS: '1'
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      YUQUE_USERNAME: ${{ secrets.YUQUE_USERNAME }}
+      YUQUE_PASSWORD: ${{ secrets.YUQUE_PASSWORD }}
+      YUQUE_LOGIN: ${{ secrets.YUQUE_LOGIN }}
+      YUQUE_REPO: ${{ secrets.YUQUE_REPO }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Sync from Yuque
+        run: pnpm sync:yuque
+
+      - name: Commit changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "chore(docs): sync yuque"
+            git push
+          fi

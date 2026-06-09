@@ -1,0 +1,12 @@
+{
+  "files": [
+    "front/function/css.md",
+    "front/function/js.md",
+    "front/html/html5.md",
+    "front/html/indexedDB.md",
+    "front/html/responsive.md",
+    "front/html/webWorker.md",
+    "front/other/core.md",
+    "front/other/problem.md"
+  ]
+}

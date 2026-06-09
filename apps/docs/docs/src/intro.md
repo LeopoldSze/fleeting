@@ -23,6 +23,35 @@ aside: 'left'
 
 <br />
 
+## 语雀同步（Elog）
+
+本仓库以语雀知识库作为内容源，通过 Elog 将文档同步为 `src/` 下的 Markdown 文件，并由 VitePress 构建站点。侧边栏为动态生成：`src` 下的一级目录会自动成为一个分区（如 `front/back/devops/interview/other`）。
+
+### 同步命令
+
+- 本地同步：`pnpm sync:yuque`
+- 同步输出：`apps/docs/docs/src/`（会按语雀目录结构生成子目录）
+- 强制全量重写：设置 `ELOG_FORCE=1`（默认启用）。如需关闭可设置 `ELOG_FORCE=0`。
+- 禁用缓存：设置 `ELOG_DISABLE_CACHE=1`（默认启用）。如需开启缓存可设置 `ELOG_DISABLE_CACHE=0`。
+
+### Front Matter 约定
+
+同步后的 Markdown 顶部会包含 Front Matter。本项目会保留并使用以下字段：
+
+| 字段 | 是否建议手写 | 作用 |
+| --- | --- | --- |
+| `title` | 建议 | 侧边栏显示标题（可中文） |
+| `order` | 建议 | 侧边栏排序，数字越小越靠前 |
+| `sidebar` | 可选 | `false` 表示不出现在侧边栏（页面仍可通过 URL 访问） |
+| `date` | 可选 | 创建时间（通常由同步过程写入） |
+| `updated` | 可选 | 更新时间（通常由同步过程写入） |
+
+说明：
+
+- 本项目使用 `slug` 作为文件名/路由；`title` 只影响侧边栏展示。
+- 建议在语雀文档顶部手动写 `slug`（例如 `webWorker`、`indexedDB`、`responsive`），用于固定 URL，避免标题修改导致固定链接 404。
+- 如需隐藏页面但保留可访问性，可在语雀文档顶部写：`sidebar: false`。
+
 ## 链接页面
 
 - **内部页面**：在页面之间链接时，可以使用绝对路径和相对路径。请注意，虽然 .md 和 .html 扩展名都可以使用，但最佳做法是省略文件扩展名，以便 VitePress 可以根据配置生成最终的 URL。

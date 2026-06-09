@@ -319,6 +319,10 @@ body {
   .item {
     border-radius: $border-radius-sm;
     padding-left: 8px;
+
+    & + .items {
+      padding-left: 12px;
+    }
   }
 
   &.is-active > .item {
