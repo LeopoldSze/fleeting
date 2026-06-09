@@ -1,9 +1,10 @@
 ---
 title: JavaScript
 date: '2026-06-09 08:59:48'
-updated: '2026-06-09 11:00:05'
+updated: '2026-06-09 14:50:31'
 slug: js
 order: 2
+inSidebar: false
 ---
 ## 判断数据类型
 ### 1. typeof

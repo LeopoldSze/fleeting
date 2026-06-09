@@ -1,8 +1,9 @@
 ---
 title: 常见问题
 date: '2026-06-09 09:03:33'
-updated: '2026-06-09 10:59:30'
+updated: '2026-06-09 14:52:08'
 slug: problem
+inSidebar: false
 ---
 ## 1. github ssh
 > 问题：github.com port 22: Connection timed out

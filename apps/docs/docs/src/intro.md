@@ -1,31 +1,42 @@
 ---
 sidebar: false
 aside: 'left'
+title: 使用指南
 ---
-# README
+# 使用指南
+
+本页用于记录本仓库的关键约定与维护方式，包括工程化、站点构建、语雀同步与写作规范。
 
 ## 目录说明
 
-- docs: 博客文档根目录
-- docs/.vitepress/config.ts: 博客文档配置文件
-- docs/src: 博客文档源目录
-- docs/src/assets: 博客文档静态资源
-- docs/dist: 博客文档编译后的静态资源
-
-::: info 脚本命令
-
-- 因为文档根目录为docs，所以脚本命令需要切换到docs目录下执行，即：
-- 开发：`vitepress dev docs`
-- 编译：`vitepress build docs`
-- 预览：`vitepress serve docs/dist`
-
-:::
-
-<br />
+- `apps/docs`: 文档站应用
+- `apps/docs/docs/.vitepress/config.ts`: VitePress 配置（含动态 sidebar、导航等）
+- `apps/docs/docs/src`: 站点内容目录（语雀同步产物与少量手写页面）
+- `apps/docs/docs/src/assets`: 站点静态资源
+- `tools/sync-yuque.ts`: 语雀同步入口脚本
 
 ## 语雀同步（Elog）
 
 本仓库以语雀知识库作为内容源，通过 Elog 将文档同步为 `src/` 下的 Markdown 文件，并由 VitePress 构建站点。侧边栏为动态生成：`src` 下的一级目录会自动成为一个分区（如 `front/back/devops/interview/other`）。
+
+### 同步流程（从语雀到线上）
+
+1. 在语雀知识库维护目录结构与文档内容（语雀是唯一内容源）
+2. 本地或 GitHub Actions 运行同步命令 `pnpm sync:yuque`
+3. Elog 拉取语雀文档，经过 `elog.format.cjs` 统一 front matter/slug 规则
+4. 同步产物写入 `apps/docs/docs/src/**.md`（按语雀目录生成子目录）
+5. VitePress 根据文件路由生成页面，侧边栏动态扫描 `src/**.md` 生成
+6. GitHub Actions 提交同步变更到仓库
+7. Vercel 监听 `main` 分支提交自动部署
+
+涉及文件：
+
+- `pnpm sync:yuque`：根 `package.json` 脚本
+- `tools/sync-yuque.ts`：同步编排、对账删除（manifest）
+- `elog.config.cjs`：Elog 平台与输出配置（yuque-pwd / local deploy）
+- `elog.format.cjs`：格式化钩子（提取/过滤 Front Matter、slug 规则、兼容 `sidebar`）
+- `apps/docs/docs/.vitepress/config.ts`：VitePress 动态 sidebar + nav 配置
+- `.github/workflows/sync-yuque.yml`：定时/手动同步工作流
 
 ### 同步命令
 
@@ -42,7 +53,7 @@ aside: 'left'
 | --- | --- | --- |
 | `title` | 建议 | 侧边栏显示标题（可中文） |
 | `order` | 建议 | 侧边栏排序，数字越小越靠前 |
-| `sidebar` | 可选 | `false` 表示不出现在侧边栏（页面仍可通过 URL 访问） |
+| `inSidebar` | 可选 | `false` 表示不出现在侧边栏条目中（页面仍可通过 URL 访问，且侧边栏仍会显示） |
 | `date` | 可选 | 创建时间（通常由同步过程写入） |
 | `updated` | 可选 | 更新时间（通常由同步过程写入） |
 
@@ -50,7 +61,128 @@ aside: 'left'
 
 - 本项目使用 `slug` 作为文件名/路由；`title` 只影响侧边栏展示。
 - 建议在语雀文档顶部手动写 `slug`（例如 `webWorker`、`indexedDB`、`responsive`），用于固定 URL，避免标题修改导致固定链接 404。
-- 如需隐藏页面但保留可访问性，可在语雀文档顶部写：`sidebar: false`。
+- 如需隐藏页面条目但保留可访问性，可在语雀文档顶部写：`inSidebar: false`。
+- `sidebar: false` 是 VitePress 内置字段，会让当前页面完全不显示侧边栏组件，不适合用于“仅隐藏条目”。
+
+示例：
+
+```yaml
+---
+title: Web Worker
+slug: webWorker
+order: 3
+inSidebar: false
+---
+```
+
+### 本地 .env（不提交）
+
+建议在仓库根目录创建 `.env`，用于本地同步（不会提交到仓库）：
+
+```env
+YUQUE_USERNAME=...
+YUQUE_PASSWORD=...
+YUQUE_LOGIN=leopoldsze
+YUQUE_REPO=tec
+```
+
+CI 自动同步使用 GitHub Secrets，同名变量即可。
+
+
+
+## 侧边栏与导航
+
+- 侧边栏由 `apps/docs/docs/.vitepress/config.ts` 动态扫描 `src/**.md` 生成。
+- `src` 的一级目录会成为一个分区（如 `front/back/devops/...`），子目录会成为分组。
+- 导航栏是手写配置（适合放少量“常用入口页面”）。如果某个页面仅通过导航访问但不希望出现在侧边栏，使用 `inSidebar: false` 即可。
+
+## 高频坑点与排障
+
+### 1) 侧边栏突然不见了
+
+现象：进入某个页面后侧边栏区域完全不显示。
+
+原因：页面 Front Matter 写了 `sidebar: false`。这是 VitePress 内置字段，含义是“当前页面不渲染侧边栏组件”。
+
+建议：
+
+- 仅隐藏条目但保留侧边栏：使用 `inSidebar: false`
+- 真要整页不显示侧边栏：再用 `sidebar: false`
+
+### 2) 固定链接 404（slug/title 搞混）
+
+现象：导航栏写死的 `/front/html/webWorker` 之类链接突然 404。
+
+原因：文件名/路由由 `slug` 决定；如果未固定 `slug`，标题变动或同步策略变化会导致文件名变化。
+
+建议：
+
+- 语雀文档顶部手写 `slug`，并把它当作长期稳定 URL（建议英文/数字/短横线）
+- `title` 只用于侧边栏显示，可中文，且允许频繁修改
+
+### 3) 只想隐藏侧边栏条目，但页面通过导航访问
+
+写法：
+
+```yaml
+---
+title: CSS
+slug: css
+order: 1
+inSidebar: false
+---
+```
+
+说明：这样页面仍可通过导航或直接 URL 访问，但不会出现在侧边栏目录里。
+
+### 4) 同步后“没有需要同步的文档”
+
+说明：Elog 有缓存/增量判断机制，可能导致本轮不产出文件。
+
+当前策略：默认禁用缓存并按配置全量更新，避免“改了 format/front matter 但不重写”的情况。必要时可通过环境变量控制：
+
+- `ELOG_DISABLE_CACHE=1`：禁用缓存（默认启用）
+- `ELOG_DISABLE_CACHE=0`：启用缓存（加速但可能更难排查）
+
+### 5) 语雀删除/重命名/移动目录后，本地怎么跟着变
+
+本仓库同步脚本会维护一个 manifest 文件：`apps/docs/docs/src/.yuque-sync-manifest.json`。
+
+- 本次同步会记录本轮写入的文件列表
+- 下次同步会对账删除旧文件（只影响同步产物，不会删 `index.md/intro.md/assets/public` 等手写内容）
+
+### 6) Windows 路径/临时目录导致同步报错
+
+建议：
+
+- 避免跨盘符临时目录拼接（脚本已使用仓库内 `.tmp/` 存放临时文件）
+- `.tmp/` 与 `elog.cache*.json` 已加入 `.gitignore`，不要提交到仓库
+
+### 7) Actions 找不到“Sync Yuque”工作流
+
+说明：GitHub Actions 的工作流列表通常以默认分支的 workflow 文件为准。确保 `.github/workflows/sync-yuque.yml` 在默认分支上。
+
+
+
+## VitePress 站点说明
+
+- 快速开始：https://vuejs.github.io/vitepress/v1/zh/guide/getting-started
+- 站点配置参考：https://vuejs.github.io/vitepress/v1/zh/reference/site-config
+- Front Matter：https://vuejs.github.io/vitepress/v1/zh/guide/frontmatter
+- 路由：https://vuejs.github.io/vitepress/v1/zh/guide/routing
+- 部署：https://vuejs.github.io/vitepress/v1/zh/guide/deploy
+
+### 本仓库的关键配置点
+
+配置文件：`apps/docs/docs/.vitepress/config.ts`。
+
+- `srcDir: 'src'`：站点源文件根目录为 `docs/src`
+- `cleanUrls: true`：生成不带 `.html` 的简洁 URL
+- `lastUpdated: true`：页面底部展示“上次更新”（由 Git 提供时间）
+- `themeConfig.nav`：顶部导航（少量固定入口）
+- `themeConfig.sidebar`：动态生成的 Multi Sidebar（按 `src` 一级目录分区）
+
+
 
 ## 链接页面
 
@@ -65,7 +197,7 @@ aside: 'left'
 
 :::
 
-<br />
+
 
 ## 自定义容器&GitHub风格警报
 
@@ -171,6 +303,8 @@ This is a details block
 > [表情列表](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.mjs)
 
 <br />
+
+
 
 ## 代码处理
 

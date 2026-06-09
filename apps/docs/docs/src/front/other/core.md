@@ -1,8 +1,9 @@
 ---
 title: 核心方案
 date: '2026-06-09 09:03:28'
-updated: '2026-06-09 10:59:43'
+updated: '2026-06-09 14:51:55'
 slug: core
+inSidebar: false
 ---
 ## 网络库选型和沉淀
   

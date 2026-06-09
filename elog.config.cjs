@@ -31,7 +31,7 @@ module.exports = {
       formatExt: './elog.format.cjs',
       frontMatter: {
         enable: true,
-        include: ['title', 'slug', 'order', 'sidebar', 'date', 'updated']
+        include: ['title', 'slug', 'order', 'inSidebar', 'date', 'updated']
       }
     }
   },
