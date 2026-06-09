@@ -3,9 +3,6 @@ import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { nextTick, onBeforeUnmount, onMounted, provide, ref } from 'vue'
 import BackToTop from './components/BackToTop.vue'
-import HomeLatest from './components/HomeLatest.vue'
-import PostFooter from './components/PostFooter.vue'
-import PostHeader from './components/PostHeader.vue'
 
 // 获取深色模式状态
 const { isDark } = useData()
@@ -109,21 +106,6 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
         {{ randomQuote }}
         <span class="refresh-icon" style="margin-left: 8px; font-size: 14px; opacity: 0.6;">↻</span>
       </div>
-    </template>
-
-    <!-- 首页特性区域下方添加最新文章列表 -->
-    <template #home-features-after>
-      <HomeLatest />
-    </template>
-
-    <!-- 文档内容前添加文章头部信息 -->
-    <template #doc-before>
-      <PostHeader />
-    </template>
-
-    <!-- 文档内容后添加文章底部导航 -->
-    <template #doc-after>
-      <PostFooter />
     </template>
   </DefaultTheme.Layout>
   <BackToTop />

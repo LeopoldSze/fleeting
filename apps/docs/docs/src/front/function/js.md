@@ -1,14 +1,15 @@
-# 常用实现
-
+---
+title: JavaScript
+date: '2026-06-09 08:59:48'
+updated: '2026-06-09 11:00:05'
+slug: js
+order: 2
+---
 ## 判断数据类型
-
-<br />
-
 ### 1. typeof
-
 两种形式：`typeof x` 或者 `typeof(x)`
 
-```js
+```javascript
 // 原始类型
 // number: number
 console.log('number:', typeof 1)
@@ -44,23 +45,17 @@ console.log('function:', typeof function () {
 })
 ```
 
-<br />
-
 ### 2. instance of
-
 用于检查对象是否属于特定类型的实例：`constructor.name`，对象的 `constructor` 属性指向创建该对象的构造函数
 
-```js
+```javascript
 // instance: true
 console.log('instance:', Array.isArray([]))
 console.log([].__proto__.constructor.name) //
 ```
 
-<br />
-
 ### 3. Object.prototype.toString
-
-```js
+```javascript
 const number = Object.prototype.toString.call(1)
 const string = Object.prototype.toString.call('1')
 const boolean = Object.prototype.toString.call(true)
@@ -105,11 +100,8 @@ console.log('object:', obj)
 console.log('function:', func)
 ```
 
-<br />
-
 ### 4. 补充
-
-```js
+```javascript
 // 判断数组
 Array.isArray([1]) // true
 
@@ -117,11 +109,8 @@ Array.isArray([1]) // true
 isNaN(',') // true
 ```
 
-<br />
-
 ### 5. 封装
-
-```js
+```javascript
 function getType(x) {
   const t = typeof x
 
@@ -153,11 +142,10 @@ function getType(x) {
 }
 ```
 
-<br />
+
 
 ## 精确加法运算
-
-```js
+```javascript
 /**
  * 精确加法
  */
@@ -169,15 +157,16 @@ function accurate_add(num1, num2) {
 }
 ```
 
-<br>
+  
+
 
 ## once
-
 > 作用：函数只执行一次
 >
 > 原理：通过闭包变量判断函数是否执行
+>
 
-```js
+```javascript
 function once(fn) {
   let count = 0
 
@@ -190,15 +179,16 @@ function once(fn) {
 }
 ```
 
-<br />
+  
+
 
 ## curry
-
 > 作用：柯里化，将普通函数变成可以传入部分参数的函数，常用于预设函数参数
 >
 > 原理：通过一个数组来存储传入的参数列表，当参数列表中实际存储的参数的个数达到预设参数个数时，就执行函数并返回结果
+>
 
-```js
+```javascript
 function curry(func) {
   // 获取函数参数个数，ES2015默认参数需考量
   const len = func.length
@@ -219,11 +209,11 @@ function curry(func) {
 }
 ```
 
-<br />
+  
+
 
 ## 判断是否符合Promise A+
-
-```js
+```javascript
 /**
  * 判断是否是promise对象，即对象是否包含then方法
  * @param obj
@@ -234,11 +224,11 @@ function isPromiseLike(obj) {
 }
 ```
 
-<br>
+  
+
 
 ## 模拟微任务
-
-```js
+```javascript
 /**
  * 运行微任务
  * @param {Function} fn - 需要运行的函数
@@ -281,15 +271,16 @@ function runMicroTasks(fn) {
 }
 ```
 
-<br>
+  
+
 
 ## promise链
-
 > 作用：promise 依次执行
 >
 > 原理：reduce实现
+>
 
-```js
+```javascript
 /**
  * 通过reduce实现promise依次执行
  * @param array
@@ -325,11 +316,11 @@ const array = [f1, f2]
 runPromiseInSequence(array, 'init')
 ```
 
-<br />
+  
+
 
 ## koa中的only
-
-```js
+```javascript
 /**
  * 通过reduce实现koa中的only模块
  * @param obj
@@ -354,11 +345,11 @@ const onlyRes = only(onlyObj, ['a', 'b', 'd'])
 console.log('onlyRes:', onlyRes) // {a: 1, b: 2}
 ```
 
-<br />
+  
+
 
 ## 图片依次加载
-
-```js
+```javascript
 /**
  * 依次加载图片
  * @param urlId
@@ -385,11 +376,11 @@ urlIds.reduce((prevPromise, urlId) => {
 }, Promise.resolve())
 ```
 
-<br />
+  
+
 
 ## 控制并发加载
-
-```js
+```javascript
 function loadImg(urlId) {
   const url = `https://img2.woyaogexing.com/2023/05/28/${urlId}.jpg`
   return new Promise((resolve, reject) => {
@@ -438,17 +429,18 @@ function loadByLimit(urlIds, loadImg, limit) {
 loadByLimit(urlIds, loadImg, 3)
 ```
 
-<br />
+  
+
 
 ## pipe
-
 > 作用：将指定的函数串起来执行，每次都将前一个函数的返回值传递给后一个函数作为输入，这个过程在函数式编程中称为pipe
 >
 > 顺序：从左到右执行
 >
 > 原理：使用数组的 `reduce` 方法
+>
 
-```js
+```javascript
 function pipe(...fns) {
   return function (...args) {
     // 将前一个函数的输出preResult传递给下一个函数的参数，第一个函数的参数是用户传入的参数args
@@ -473,17 +465,18 @@ const compute = pipe(add, multiply, subtract);
 console.log(compute(2)); // 3
 ```
 
-<br />
+  
+
 
 ## compose
-
 > 作用：将指定的函数串起来执行，每次都将前一个函数的返回值传递给后一个函数作为输入
 >
 > 顺序：从右到左执行
 >
 > 使用场景：**设计中间件系统**
+>
 
-```js
+```javascript
 // 方法一：使用reduceRight
 function compose(...fns) {
   return function (...args) {
@@ -493,7 +486,7 @@ function compose(...fns) {
 }
 ```
 
-```js
+```javascript
 // 方法二：依赖pipe
 function compose(...fns) {
   return function (...args) {
@@ -538,13 +531,14 @@ const compute3 = compose2(add, multiply, subtract);
 console.log('compute3:', compute3(4)); // 4
 ```
 
-<br />
+  
+
 
 ## createData
-
 > 作用：创建指定深度和每层广度的数据
+>
 
-```js
+```javascript
 function createData(depth, breadth) {
   const data = {}
   let temp = data
@@ -562,13 +556,14 @@ function createData(depth, breadth) {
 }
 ```
 
-<br />
+  
+
 
 ## 浅拷贝
-
 > 作用：对引用类型只进行一层拷贝
+>
 
-```js
+```javascript
 funtion shallowClone(source) {
   const target = {}
 
@@ -582,11 +577,11 @@ funtion shallowClone(source) {
 }
 ```
 
-<br />
+  
+
 
 ## 深拷贝
-
-```JS
+```plain
 // 方法一：递归
 function clone(source) {
   const target = {}
@@ -606,14 +601,14 @@ function clone(source) {
 }
 ```
 
-```js
+```javascript
 // 方法二：JSON.stringify 内部做了循环引用的检测
 function cloneJSON(source) {
   return JSON.parse(JSON.stringify(source))
 }
 ```
 
-```js
+```javascript
 // 特殊类型处理、防止原型污染
 function cloneSpecialTypes(target) {
   // Date
@@ -693,21 +688,20 @@ function deepClone(obj, hash = new WeakMap()) {
 }
 ```
 
-<br />
+  
+
 
 ## 破解递归爆栈
-
 > 方法：第一种是消除尾递归，第二种是改用循环
+>
 
-::: tip
-
-- 使用循环遍历一棵树需要借助一个栈，当栈为空时遍历完成
-
-- 栈里面存储下一个需要拷贝的节点，栈中每个节点要存储3个数据，分别是待拷贝的节点data，待拷贝节点的父节点parent，待拷贝节点在父节点中的属性值key
+:::info
++ 使用循环遍历一棵树需要借助一个栈，当栈为空时遍历完成
++ 栈里面存储下一个需要拷贝的节点，栈中每个节点要存储3个数据，分别是待拷贝的节点data，待拷贝节点的父节点parent，待拷贝节点在父节点中的属性值key
 
 :::
 
-```js
+```javascript
 // 深拷贝方法三：使用循环
 
 function cloneLoop(x) {
@@ -756,11 +750,11 @@ function cloneLoop(x) {
 }
 ```
 
-<br />
+  
+
 
 ## 破解循环引用
-
-```js
+```javascript
 // 深拷贝方法四：保持引用关系
 function cloneForce(x) {
   // 用来去重的数组
@@ -833,22 +827,24 @@ function find(arr, item) {
 }
 ```
 
-|          | clone        | cloneJSON    | cloneLoop | cloneForce   |
-| -------- | ------------ | ------------ | --------- | ------------ |
-| 难度     | 2星          | 1星          | 3星       | 4星          |
-| 兼容性   | IE6          | IE8          | IE6       | IE6          |
-| 循环引用 | 一层         | 不支持       | 一层      | 支持         |
-| 栈溢出   | 会           | 会           | 不会      | 不会         |
-| 保持引用 | 否           | 否           | 否        | 是           |
-| 适合场景 | 一般数据拷贝 | 一般数据拷贝 | 层级很多  | 保持引用关系 |
+|  | clone | cloneJSON | cloneLoop | cloneForce |
+| --- | --- | --- | --- | --- |
+| 难度 | 2星 | 1星 | 3星 | 4星 |
+| 兼容性 | IE6 | IE8 | IE6 | IE6 |
+| 循环引用 | 一层 | 不支持 | 一层 | 支持 |
+| 栈溢出 | 会 | 会 | 不会 | 不会 |
+| 保持引用 | 否 | 否 | 否 | 是 |
+| 适合场景 | 一般数据拷贝 | 一般数据拷贝 | 层级很多 | 保持引用关系 |
 
-<br />
+
+  
+
 
 ## promisify
-
 > 将回调函数形式改成promise方式
+>
 
-```js
+```javascript
 /**
  * 针对node回调模式
  */
@@ -883,13 +879,14 @@ const wxRequest = promisify(wx.request);
 wxRequest({ url: 'xxx', success: fn, error: fn }).then().catch()
 ```
 
-<br />
+  
+
 
 ## callbackify
-
 > 将promise形式改成callback方式
+>
 
-```js
+```javascript
 function callbackify(fn) {
   return (...args) => {
     // 读取最后一个参数
@@ -903,30 +900,29 @@ function callbackify(fn) {
 }
 ```
 
-<br />
+  
+
 
 ## 字符串准确长度
-
-```js
+```javascript
 function codePointLength(text) {
   const result = text.match(/[\s\S]/gu)
   return result ? result.length : 0
 }
 ```
 
-<br />
+  
+
 
 ## 获取页面大小
-
 ![](https://leopold.oss-cn-hangzhou.aliyuncs.com/tech/js-clientWidth.gif)
 
-- 网页上的每个元素，都有`clientHeight`和 `clientWidth` 属性。这两个属性指元素的 `content` 再加上`padding` 的所占据的视觉面积，不包括 `border` 和滚动条占用的空间
++ 网页上的每个元素，都有`clientHeight`和 `clientWidth` 属性。这两个属性指元素的 `content` 再加上`padding` 的所占据的视觉面积，不包括 `border` 和滚动条占用的空间
++ 网页上的每个元素还有 `scrollHeight` 和 `scrollWidth` 属性，指包含滚动条在内的该元素的视觉面积。
++ 如果网页内容能够在浏览器窗口中全部显示，不出现滚动条，那么网页的 `clientWidth` 和 `scrollWidth` 应该相等
++ 但是实际上，不同浏览器有不同的处理，这两个值未必相等。所以，我们需要取它们之中较大的那个值
 
-* 网页上的每个元素还有 `scrollHeight` 和 `scrollWidth` 属性，指包含滚动条在内的该元素的视觉面积。
-* 如果网页内容能够在浏览器窗口中全部显示，不出现滚动条，那么网页的 `clientWidth` 和 `scrollWidth` 应该相等
-* 但是实际上，不同浏览器有不同的处理，这两个值未必相等。所以，我们需要取它们之中较大的那个值
-
-```js
+```javascript
 function getPagearea() {
   if (document.compatMode === 'BackCompat') {
     return {
@@ -943,17 +939,16 @@ function getPagearea() {
 }
 ```
 
-<br />
+  
+
 
 ## 获取元素的绝对位置
-
 ![](https://leopold.oss-cn-hangzhou.aliyuncs.com/tech/js-offsetWidth.gif)
 
-- 网页元素的绝对位置，指该元素的左上角相对于整张网页左上角的坐标。这个绝对位置要通过计算才能得到。
++ 网页元素的绝对位置，指该元素的左上角相对于整张网页左上角的坐标。这个绝对位置要通过计算才能得到。
++ 首先，每个元素都有 `offsetTop` 和 `offsetLeft` 属性，表示该元素的左上角与父容器（`offsetParent` 对象）左上角的距离。所以，只需要将这两个值进行累加，就可以得到该元素的绝对坐标。
 
-- 首先，每个元素都有 `offsetTop` 和 `offsetLeft` 属性，表示该元素的左上角与父容器（`offsetParent` 对象）左上角的距离。所以，只需要将这两个值进行累加，就可以得到该元素的绝对坐标。
-
-```js
+```javascript
 // 获取横坐标
 function getElementLeft(element) {
   let actualLeft = element.offsetLeft
@@ -981,24 +976,23 @@ function getElementTop(element) {
 }
 ```
 
-::: warning
-
+:::warning
 由于在表格和 `iframe` 中，`offsetParent` 对象未必等于父容器，所以上面的函数对于表格和 `iframe` 中的元素不适用
 
 :::
 
-<br />
+  
+
 
 ## 获取元素的相对位置
-
 ![](https://leopold.oss-cn-hangzhou.aliyuncs.com/tech/js-scroll.gif)
 
-- 网页元素的相对位置，指该元素左上角相对于浏览器窗口左上角的坐标。
-- 有了绝对位置以后，获得相对位置就很容易了，只要将绝对坐标减去页面的滚动条滚动的距离就可以了。
-- 滚动条滚动的垂直距离，是 `document` 对象的 `scrollTop` 属性；滚动条滚动的水平距离是 `document` 对象的 `scrollLeft` 属性。
-- `scrollTop` 和 `scrollLeft` 属性是可以赋值的，并且会立即自动滚动网页到相应位置，因此可以利用它们改变网页元素的相对位置。另外，`element.scrollIntoView()` 方法也有类似作用，可以使网页元素出现在浏览器窗口的左上角。
++ 网页元素的相对位置，指该元素左上角相对于浏览器窗口左上角的坐标。
++ 有了绝对位置以后，获得相对位置就很容易了，只要将绝对坐标减去页面的滚动条滚动的距离就可以了。
++ 滚动条滚动的垂直距离，是 `document` 对象的 `scrollTop` 属性；滚动条滚动的水平距离是 `document` 对象的 `scrollLeft` 属性。
++ `scrollTop` 和 `scrollLeft` 属性是可以赋值的，并且会立即自动滚动网页到相应位置，因此可以利用它们改变网页元素的相对位置。另外，`element.scrollIntoView()` 方法也有类似作用，可以使网页元素出现在浏览器窗口的左上角。
 
-```js
+```javascript
 function getElementViewLeft(element) {
   let actualLeft = element.offsetLeft
   let current = element.offsetParent
@@ -1040,13 +1034,13 @@ function getElementViewTop(element) {
 }
 ```
 
-<br />
+  
+
 
 ## 获取元素相对视口的位置
-
 那就是使用 `getBoundingClientRect()` 方法。它返回一个对象，其中包含了 `left、right、top、bottom` 四个属性，分别对应了该元素的左上角和右下角相对于浏览器窗口（`viewport`）左上角的距离。
 
-```js
+```javascript
 // 相对位置
 const X = this.getBoundingClientRect().left;
 const Y = this.getBoundingClientRect().top;
@@ -1056,228 +1050,216 @@ const X = this.getBoundingClientRect().left +document.documentElement.scrollLeft
 const Y = this.getBoundingClientRect().top+document.documentElement.scrollTop;
 ```
 
-<br />
+  
+
 
 ## 属性遍历
-
 在JavaScript中，我们可以使用以下方法遍历对象的属性：
 
 1. 遍历自身属性：
-
-   - `Object.keys(obj)`：返回由对象自身的可枚举属性所组成的数组
-
-   - `Object.getOwnPropertyNames(obj)`：返回由对象自身的属性所组成的数组，包括不可枚举属性
-
-   - `Object.getOwnPropertyDescriptors(obj)`：返回由对象自身的属性及其描述符所组成的对象
-
-   - `Reflect.ownKeys(obj)`：返回由对象自身的属性键组成的数组，包括Symbol类型的属性键
-
+    - `Object.keys(obj)`：返回由对象自身的可枚举属性所组成的数组
+    - `Object.getOwnPropertyNames(obj)`：返回由对象自身的属性所组成的数组，包括不可枚举属性
+    - `Object.getOwnPropertyDescriptors(obj)`：返回由对象自身的属性及其描述符所组成的对象
+    - `Reflect.ownKeys(obj)`：返回由对象自身的属性键组成的数组，包括Symbol类型的属性键
 2. 遍历原型属性：
-
-   - `Object.getPrototypeOf(obj)`：返回对象的原型
-
-   - `Object.keys(Object.getPrototypeOf(obj))`：返回的是原型对象中的所有可枚举属性
-
-   - `Object.getOwnPropertyNames(Object.getPrototypeOf(obj))`：返回对象原型中所有的属性
-
-   - `Object.getOwnPropertyDescriptors(Object.getPrototypeOf(obj))`：返回对象原型中的所有属性及其描述符
-
+    - `Object.getPrototypeOf(obj)`：返回对象的原型
+    - `Object.keys(Object.getPrototypeOf(obj))`：返回的是原型对象中的所有可枚举属性
+    - `Object.getOwnPropertyNames(Object.getPrototypeOf(obj))`：返回对象原型中所有的属性
+    - `Object.getOwnPropertyDescriptors(Object.getPrototypeOf(obj))`：返回对象原型中的所有属性及其描述符
 3. 遍历全部属性：
-
-- `for…in` 循环：遍历对象的可枚举属性，包括自身属性和继承的属性，但不包括Symbol类型的属性，也不保证属性的顺序
-
-- `Object.getOwnPropertyNames(obj)` 和`Object.getOwnPropertyNames(Object.getPrototypeOf(obj))` 的结合：返回对象及其原型链上所有的属性
++ `for…in` 循环：遍历对象的可枚举属性，包括自身属性和继承的属性，但不包括Symbol类型的属性，也不保证属性的顺序
++ `Object.getOwnPropertyNames(obj)` 和`Object.getOwnPropertyNames(Object.getPrototypeOf(obj))` 的结合：返回对象及其原型链上所有的属性
 
 需要注意的是，在使用以上方法遍历属性时，如果需要修改属性，必须使用 `Object.defineProperty` 等方法来进行修改，否则会抛出“TypeError: Cannot assign to read only property”的异常。
 
 总之，JavaScript中有多种方法来遍历对象的属性，开发者可以根据自己的需要选择对应的方法。不过需要注意，如果需要对对象及其原型链上的属性进行操作，建议使用 `Object.getOwnPropertyNames(obj)` 和`Object.getOwnPropertyNames(Object.getPrototypeOf(obj))` 的结合来进行操作。
 
-<br />
+  
+
 
 ## 数组去重
-
 1. 使用 `for` 循环和 `indexOf` 方法，复杂度 O(n^2)
 
-   ```js
-   function uniqueArray(arr) {
-     const result = []
+```javascript
+function uniqueArray(arr) {
+  const result = []
 
-     for (let i = 0; i < arr.length; i++) {
-       if (result.indexOf(arr[i] === -1)) {
-         result.push(arr[i])
-       }
-     }
+  for (let i = 0; i < arr.length; i++) {
+    if (result.indexOf(arr[i] === -1)) {
+      result.push(arr[i])
+    }
+  }
 
-     return result
-   }
-   ```
+  return result
+}
+```
 
 2. 使用 `for` 循环和对象，复杂度 O(n^2)
 
-   ```js
-   function uniqueArray(arr) {
-     const result = []
-     const obj = {}
+```javascript
+function uniqueArray(arr) {
+  const result = []
+  const obj = {}
 
-     for (let i = 0; i < arr.length; i++) {
-       if (!obj[arr[i]]) {
-         result.push(arr[i])
-         obj[arr[i]] = true
-       }
-     }
+  for (let i = 0; i < arr.length; i++) {
+    if (!obj[arr[i]]) {
+      result.push(arr[i])
+      obj[arr[i]] = true
+    }
+  }
 
-     return result
-   }
-   ```
+  return result
+}
+```
 
 3. 使用 `filter` 方法和 `indexOf` 方法，复杂度 O(n^2)
 
-   ```js
-   function uniqueArray(arr) {
-     return arr.filter((item, index, array) => array.indexOf(item) === index)
-   }
-   ```
+```javascript
+function uniqueArray(arr) {
+  return arr.filter((item, index, array) => array.indexOf(item) === index)
+}
+```
 
 4. 使用 `filter` 方法和对象，复杂度 O(n)
 
-   ```js
-   function uniqueArray(arr) {
-     const obj = {}
-     return arr.filter(item => obj.hasOwnProperty(item) ? false : (obj[item] = true))
-   }
-   ```
+```javascript
+function uniqueArray(arr) {
+  const obj = {}
+  return arr.filter(item => obj.hasOwnProperty(item) ? false : (obj[item] = true))
+}
+```
 
 5. 使用 `Set` 数据结构，复杂度 O(n)
 
-   ```js
-   function uniqueArray(arr) {
-     return Array.from(new Set(arr))
-   }
+```javascript
+function uniqueArray(arr) {
+  return Array.from(new Set(arr))
+}
 
-   // 使用解构 + Set
-   function uniqueArray(arr) {
-     return [...new Set(arr)]
-   }
-   ```
+// 使用解构 + Set
+function uniqueArray(arr) {
+  return [...new Set(arr)]
+}
+```
 
 6. 使用 `Map` 数据结构，复杂度 O(n)
 
-   ```js
-   function uniqueArray(arr) {
-     const map = new Map();
-     const result = [];
-     for (let i = 0; i < arr.length; i++) {
-       if (!map.has(arr[i])) {
-         map.set(arr[i], true);
-         result.push(arr[i]);
-       }
-     }
-     return result;
-   }
+```javascript
+function uniqueArray(arr) {
+  const map = new Map();
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!map.has(arr[i])) {
+      map.set(arr[i], true);
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}
 
-   // or
-   function uniqueArray(arr) {
-     const map = new Map();
-     return arr.filter(function(item) {
-       return !map.has(item) && map.set(item, true);
-     });
-   }
-   ```
+// or
+function uniqueArray(arr) {
+  const map = new Map();
+  return arr.filter(function(item) {
+    return !map.has(item) && map.set(item, true);
+  });
+}
+```
 
 7. 使用双重循环和 `splice` 方法，复杂度 O(n^2)
 
-   ```js
-   function uniqueArray(arr) {
-     for (let i = 0; i < arr.length; i++) {
-       for (let j = i + 1; j < arr.length; j++) {
-         if (arr[i] === arr[j]) {
-           arr.splice(j, 1)
-           j--
-         }
-       }
-     }
-     return arr
-   }
-   ```
+```javascript
+function uniqueArray(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] === arr[j]) {
+        arr.splice(j, 1)
+        j--
+      }
+    }
+  }
+  return arr
+}
+```
 
 8. 使用排序和双指针：使用排序和双指针可以实现 O(nlogn) 的时间复杂度。先对数组进行排序，然后使用双指针遍历数组，如果左指针和右指针指向的值相同，就把右指针向右移动，直到找到不同的值，然后把左指针向右移动，继续遍历。
 
-   ```js
-   function uniqueArray(arr) {
-     arr.sort()
-     let left = 0; let right = 1
-     const result = []
-     while (right <= arr.length) {
-       if (arr[left] === arr[right]) {
-         right++
-       }
-       else {
-         result.push(arr[left])
-         left = right
-         right++
-       }
-     }
-     return result
-   }
-   ```
+```javascript
+function uniqueArray(arr) {
+  arr.sort()
+  let left = 0; let right = 1
+  const result = []
+  while (right <= arr.length) {
+    if (arr[left] === arr[right]) {
+      right++
+    }
+    else {
+      result.push(arr[left])
+      left = right
+      right++
+    }
+  }
+  return result
+}
+```
 
 9. 使用 `reduce` 方法和 `includes`，复杂度 O(n^2)
 
-   ```js
-   function uniqueArray(arr) {
-     return arr.reduce((prev, cur) => {
-       if (!prev.includes(cur)) {
-         prev.push(cur)
-       }
-       return prev
-     }, [])
-   }
-   ```
+```javascript
+function uniqueArray(arr) {
+  return arr.reduce((prev, cur) => {
+    if (!prev.includes(cur)) {
+      prev.push(cur)
+    }
+    return prev
+  }, [])
+}
+```
 
 10. 使用递归和 `includes`，复杂度 O(n^2)
 
-    ```js
-    function uniqueArray(arr) {
-      if (arr.length === 1) {
-        return arr
-      }
-      else {
-        const first = arr[0]
-        const rest = uniqueArray(arr.slice(1))
-        if (rest.includes(first)) {
-          return rest
-        }
-        else {
-          return [first].concat(rest)
-        }
-      }
+```javascript
+function uniqueArray(arr) {
+  if (arr.length === 1) {
+    return arr
+  }
+  else {
+    const first = arr[0]
+    const rest = uniqueArray(arr.slice(1))
+    if (rest.includes(first)) {
+      return rest
     }
-    ```
+    else {
+      return [first].concat(rest)
+    }
+  }
+}
+```
 
 11. 双层循环，复杂度 O(n^2)
 
-    ```js
-    function uniqueArray(arr) {
-      const result = []
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < result.length; j++) {
-          if (arr[i] === result[j]) {
-            break
-          }
-        }
-        if (j === result.length) {
-          result.push(arr[i])
-        }
+```javascript
+function uniqueArray(arr) {
+  const result = []
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < result.length; j++) {
+      if (arr[i] === result[j]) {
+        break
       }
-      return result
     }
-    ```
+    if (j === result.length) {
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+```
 
-<br />
+  
+
 
 ## 页面时间指标
-
-```js
+```javascript
 const timing = {
   // 同一个浏览器上一个页面卸载(unload)结束时的时间戳。如果没有上一个页面，这个值会和fetchStart相同。
   navigationStart: 1543806782096,
@@ -1375,38 +1357,39 @@ const whiteScreen = new Date() - timing.navigationStart
 const resourceTime = window.performance.getEntriesByType('resource')
 ```
 
-<br />
+  
+
 
 ## 文件下载
-
 1. 方法一：通过创建一个带有 `href` 和 `download` 属性的 `<a>` 标签，可以实现文件的下载。`href` 指定文件的 URL，`download` 属性指定文件的下载名称
 
-   ```html
-   <a href="path/to/file.pdf" download="filename.pdf">Download PDF</a>
-   ```
+```html
+<a href="path/to/file.pdf" download="filename.pdf">Download PDF</a>
+
+```
 
 2. 方法二：调用接口也能下载，后台返回文件数据，然后转 blob。通过 `URL.createObjectURL(blob)`转成一个下载链接，然后 `createElement `一个a元素， href 指向链接，最后click 模拟点击就可以了
 
-   ```js
-   fetch('path/to/file.pdf')
-     .then(response => response.blob())
-     .then((blob) => {
-       const downloadLink = URL.createObjectURL(blob)
-       const a = document.createElement('a')
-       a.href = downloadLink
-       a.download = 'filename.pdf'
-       document.body.appendChild(a)
-       a.click()
-       document.body.removeChild(a)
-       // 释放临时的 URL 地址
-       URL.revokeObjectURL(downloadLink)
-     })
-   ```
+```javascript
+fetch('path/to/file.pdf')
+  .then(response => response.blob())
+  .then((blob) => {
+    const downloadLink = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = downloadLink
+    a.download = 'filename.pdf'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    // 释放临时的 URL 地址
+    URL.revokeObjectURL(downloadLink)
+  })
+```
 
-<br />
+  
+
 
 ## 主题切换
-
 ```typescript
 import { watchEffect } from 'vue'
 
@@ -1423,7 +1406,7 @@ function followSystem() {
 }
 
 watchEffect(() => {
-	// 如果主题变量为 auto, 则跟随系统主题
+    // 如果主题变量为 auto, 则跟随系统主题
   if (appearance.value === 'auto') {
     followSystem()
   } else {
@@ -1439,12 +1422,13 @@ export default function useThemeColor() {
 ```
 
 > 参考：[Vue3自定义一个Hooks，实现一键换肤](https://juejin.cn/post/7237020208648634429)
+>
 
-<br />
+  
+
 
 ## 大屏自适应
-
-```js
+```javascript
 function autoScale(selector, options) {
   const el = document.querySelector(selector)
   const { width, height } = options
@@ -1465,16 +1449,16 @@ function autoScale(selector, options) {
 }
 ```
 
-<br>
+  
+
 
 ## 防抖
-
 防抖和节流其实都是在规避频繁触发回调导致大量计算，从而影响页面发生抖动甚至卡顿。
 
-- 指定的时间间隔内，事件多次触发则重新计时，如果时间间隔内没有事件触发再执行
-- 适用于需要等待一段时间后再执行函数的场景，如搜索框输入、窗口调整等
++ 指定的时间间隔内，事件多次触发则重新计时，如果时间间隔内没有事件触发再执行
++ 适用于需要等待一段时间后再执行函数的场景，如搜索框输入、窗口调整等
 
-```js
+```javascript
 function debounce(func, delay) {
   let timer
   return function () {
@@ -1496,15 +1480,14 @@ const debouncedInput = debounce(handleInput, 300)
 document.getElementById('input').addEventListener('input', debouncedInput)
 ```
 
-<br>
+  
+
 
 ## 节流
++ 节流的原理是在指定的时间间隔内，无论事件触发多少次，都只执行一次函数。按时间间隔执行
++ 适用于需要在一定频率下执行函数的场景，如滚动事件、鼠标移动等
 
-- 节流的原理是在指定的时间间隔内，无论事件触发多少次，都只执行一次函数。按时间间隔执行
-
-- 适用于需要在一定频率下执行函数的场景，如滚动事件、鼠标移动等
-
-```js
+```javascript
 function throttle(func, delay) {
   let timer
   return function () {
@@ -1528,10 +1511,10 @@ const throttledScroll = throttle(handleScroll, 300)
 window.addEventListener('scroll', throttledScroll)
 ```
 
-<br>
+  
+
 
 ## 发布-订阅
-
 ```typescript
 type CbFn = (...args: any[]) => void
 
@@ -1562,10 +1545,10 @@ class EventBus {
 export const bus = new EventBus()
 ```
 
-<br>
+  
+
 
 ## 单例
-
 ```typescript
 class EventBus {
   private static _instance: EventBus
@@ -1579,10 +1562,10 @@ class EventBus {
 export const singleBus = EventBus.getInstance()
 ```
 
-<br>
+  
+
 
 ## 图片预加载
-
 ```typescript
 const images = [...]
 
@@ -1605,11 +1588,11 @@ export async function preloadImages(max = 3) {
 
   function _loadImage() {
     loadImage().finally(() => {
-			if(_images.length) {
+            if(_images.length) {
         _loadImage()
       }
     })
-	}
+    }
 
   for (let i = 0; i < max; i++) {
     _loadImage()
@@ -1642,8 +1625,8 @@ export const preloadImages = (options: PreloadImagesOptions): Plugin => {
         return {
           tag: 'link',
           attrs: {
-           	rel,
-          	href,
+               rel,
+              href,
             as: 'image'
           }
         }
@@ -1670,13 +1653,14 @@ export default defineConfig {
 }
 ```
 
-<br>
+  
+
 
 ## React实现自定义storage hook
-
 > 原理：通过 `useSyncExternalStore` 实现一个类似发布-订阅模式，可以多Tab页签共享存储数据
 >
 > `useSyncExternalStore` 是 React 18 引入的一个 Hook，用于从外部存储（例如状态管理库、浏览器 API 等）获取状态并在组件中同步显示。这对于需要跟踪外部状态的应用非常有用。
+>
 
 ```typescript
 import { useSyncExternalStore } from 'react'
@@ -1727,23 +1711,27 @@ function App() {
         <button onClick={() => setCount(count - 1)}>
           -
         </button>
+
         <button onClick={() => setCount(count + 1)}>
           +
         </button>
+
         <p>
           { count }
         </p>
+
       </div>
+
     </>
   )
 }
 ```
 
-<br>
+  
+
 
 ## webpack统计阶段耗时
-
-```js
+```javascript
 // WebpackTimingPlugin.js
 
 const chalk = require('chalk')
@@ -1850,11 +1838,11 @@ class WebpackTiming {
 module.exports = WebpackTiming
 ```
 
-<br>
+  
+
 
 ## babel插件实现console调试代码定位
-
-```JS
+```plain
 // 插件代码 parameters-insert-plugin.js
 const targetCalleeName = ['log', 'info', 'error', 'debug'].map(item => `console.${item}`);
 
@@ -1902,11 +1890,11 @@ const { code } = transformFileSync(path.join(__dirname, './sourceCode.js'), {
 console.log(code);
 ```
 
-<br />
+  
+
 
 ## babel插件实现自动埋点
-
-```js
+```javascript
 const { declare } = require('@babel/helper-plugin-utils');
 const importModule = require('@babel/helper-module-imports');
 
@@ -1978,10 +1966,10 @@ const { code } = transformFromAstSync(ast, sourceCode, {
 console.log(code);
 ```
 
-<br />
+  
+
 
 ## vant组件增强注册
-
 ```typescript
 /**
  * 组件增强：
@@ -2018,10 +2006,10 @@ export function withInstall<T extends Component>(options: T) {
 }
 ```
 
-<br />
+  
+
 
 ## Vant BEM实现
-
 ```typescript
 export type Mod = string | { [key: string]: any };
 export type Mods = Mod | Mod[];
@@ -2072,4 +2060,6 @@ export function createBEM(name: string) {
 export type BEM = ReturnType<typeof createBEM>;
 ```
 
-<br />
+  
+
+
