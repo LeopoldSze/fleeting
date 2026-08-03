@@ -98,9 +98,6 @@ function getNavConfig(): NavItem[] {
   ]
 }
 
-/**
- * sidebar配置
- */
 interface DocFrontmatter {
   /**
    * 侧边栏显示标题。

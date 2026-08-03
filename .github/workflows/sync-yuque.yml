@@ -37,6 +37,11 @@ jobs:
       - name: Sync from Yuque
         run: pnpm sync:yuque
 
+      - name: Update heartbeat (prevent scheduled workflow from being disabled)
+        run: |
+          mkdir -p .github
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/LAST_SYNC
+
       - name: Commit changes
         run: |
           if [ -n "$(git status --porcelain)" ]; then
