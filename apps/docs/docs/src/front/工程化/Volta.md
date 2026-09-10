@@ -1,7 +1,7 @@
 ---
 title: Volta
 date: '2026-09-09 15:07:58'
-updated: '2026-09-09 17:09:35'
+updated: '2026-09-10 07:58:50'
 slug: Volta
 ---
 # Volta 前端工具链完整指南（Windows 版）
@@ -9,28 +9,6 @@ slug: Volta
 本文档基于 Volta 官方文档（docs.volta.sh）整理，结合国内网络环境做了镜像源适配。  
 适用人群：纯前端方向（网页端 / H5 / 小程序端），兼顾 Flutter App 开发场景。
 >
-
----
-
-## 目录
-1. [Volta 是什么，为什么用它](#1-volta-是什么为什么用它)
-2. [安装](#2-安装)
-3. [核心概念：理解 Volta 的工作机制](#3-核心概念理解-volta-的工作机制)
-4. [常用命令速查](#4-常用命令速查)
-5. [Node / npm 版本管理](#5-node--npm-版本管理)
-6. [Yarn 使用注意事项](#6-yarn-使用注意事项)
-7. [pnpm 使用注意事项（实验性功能）](#7-pnpm-使用注意事项实验性功能)
-8. [全局 CLI 工具管理（Package Binaries）](#8-全局-cli-工具管理package-binaries)
-9. [项目级版本锁定（pin）与团队协作](#9-项目级版本锁定pin与团队协作)
-10. [Monorepo / Workspaces 场景](#10-monorepo--workspaces-场景)
-11. [镜像源配置一：hooks.json（管 Volta 自身下载工具）](#11-镜像源配置一hooksjson管-volta-自身下载工具)
-12. [镜像源配置二：.npmrc（管日常依赖包下载，别漏了这步）](#12-镜像源配置二npmrc管日常依赖包下载别漏了这步)
-13. [存储路径与 C 盘空间管理](#13-存储路径与-c-盘空间管理)
-14. [卸载 Volta](#14-卸载-volta)
-15. [换新机器 / 重装系统 Checklist](#15-换新机器--重装系统-checklist)
-16. [常见问题 FAQ](#16-常见问题-faq)
-17. [重要提醒：Volta 项目现状与 mise 详细对比](#17-重要提醒volta-项目现状与-mise-详细对比)
-18. [Flutter / JDK / Android SDK 环境配置建议](#18-flutter--jdk--android-sdk-环境配置建议)
 
 ---
 
